@@ -1,0 +1,52 @@
+name:                hspec-golden
+version:             0.1.0.0
+github:              "stackbuilders/hspec-golden"
+license:             BSD3
+author:              "Stack Builders"
+maintainer:          "cmotoche@stackbuilders.com"
+copyright:           "2019 Stack Builders Inc"
+synopsis:            "Golden tests for hspec"
+category:            Testing
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+description:         Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Test.Hspec.Golden
+  dependencies:
+  - directory
+  - hspec-core
+
+executables:
+  hspec-golden-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hspec-golden
+
+tests:
+  hspec-golden-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - directory
+    - silently
+    - hspec
+    - hspec-golden
+    - hspec-core
