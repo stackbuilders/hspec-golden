@@ -26,7 +26,7 @@ library:
   - hspec-core
 
 executables:
-  hspec-golden-exe:
+  hgold:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -35,6 +35,8 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - hspec-golden
+    - directory >= 1.2.5.0
+    - simple-get-opt
 
 tests:
   hspec-golden-test:
