@@ -24,6 +24,7 @@ addons:
       - cabal-install-1.18
       - cabal-install-1.22
       - cabal-install-1.24
+      - cabal-install-2.0
       - cabal-install-2.2
       - cabal-install-2.4
 
