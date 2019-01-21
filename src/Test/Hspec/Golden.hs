@@ -1,7 +1,6 @@
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE ExistentialQuantification #-}
 
 module Test.Hspec.Golden
   ( Golden(..)
@@ -25,20 +24,19 @@ import           System.Directory ( createDirectoryIfMissing
 -- | Golden tests parameters
 
 data Golden str =
-  forall. Eq str =>
-    Golden {
-      output :: str, -- ^ Lazy bytestring output
-      writeToFile :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
-      readFromFile :: FilePath -> IO str, -- ^ How to read the file,
-      testName :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
-      directory :: FilePath -- ^ Directory where you write your tests
-    }
+  Golden {
+    output :: str, -- ^ Lazy bytestring output
+    writeToFile :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
+    readFromFile :: FilePath -> IO str, -- ^ How to read the file,
+    testName :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
+    directory :: FilePath -- ^ Directory where you write your tests
+  }
 
-instance Example (Golden str) where
+instance Eq str => Example (Golden str) where
   type Arg (Golden str) = ()
   evaluateExample e = evaluateExample (\() -> e)
 
-instance Example (arg -> Golden str) where
+instance Eq str => Example (arg -> Golden str) where
   type Arg (arg -> Golden str) = arg
   evaluateExample golden _ action _ = do
     ref <- newIORef (Result "" Success)
@@ -65,7 +63,7 @@ defaultGolden name output_ =
     testName = name,
     writeToFile = writeFile,
     readFromFile = readFile,
-    directory = ".hspec"
+    directory = ".golden"
   }
 
 -- | Possible results from a golden test execution
@@ -77,7 +75,7 @@ data GoldenResult =
 
 -- | Runs a Golden test.
 
-runGolden :: Golden str -> IO GoldenResult
+runGolden :: Eq str => Golden str -> IO GoldenResult
 runGolden Golden{..} =
   let goldenTestDir = directory ++ "/" ++ testName
       goldenFilePath = goldenTestDir ++ "/" ++ "golden"

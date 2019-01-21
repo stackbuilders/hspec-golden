@@ -18,7 +18,7 @@ fixtureContent = "simple text"
 fixtureTestName = "id"
 
 goldenTestDir, goldenFile, actualFile :: FilePath
-goldenTestDir = ".hspec/id"
+goldenTestDir = directory (defaultGolden "" "") ++ "/" ++ "id"
 goldenFile = goldenTestDir ++ "/" ++ "golden"
 actualFile = goldenTestDir ++ "/" ++ "actual"
 
