@@ -77,6 +77,18 @@ Flags:
   -h       --help          Displays help information
 ```
 
+Update the golden tests under `.golden` directory:
+
+```
+$ hgold -u
+```
+
+Update the golden tests under `.myGoldenTest` directory:
+
+```
+$ hgold -u .myGoldenTest
+```
+
 ## Licensing
 
 MIT, see the [LICENSE file](./LICENSE).

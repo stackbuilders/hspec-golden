@@ -56,7 +56,7 @@ updateGolden dir = do
   putStrLn "Replacing golden with actual..."
   goldenTests <- listDirectory dir
   forM_ goldenTests (mvActualToGolden dir)
-  putStrLn "...Finish"
+  putStrLn "Finish..."
 
 mvActualToGolden :: FilePath -> FilePath -> IO ()
 mvActualToGolden goldenDir testName =
@@ -65,7 +65,7 @@ mvActualToGolden goldenDir testName =
    in do
      actualFileExist <- doesFileExist actualFilePath
      when actualFileExist (do
-       putStrLn $ "Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
+       putStrLn $ "  Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
        renameFile actualFilePath goldenFilePath)
 
 -- MAIN
