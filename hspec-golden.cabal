@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2026be5380c50f8c50d4dfcb8ba0a82c7f6bae33450323b9d2c78882e6521ea7
+-- hash: 83cc81bf5ff29892ea3a331b29c4837fba7d68c839fa614144362ac7699e4d04
 
 name:           hspec-golden
 version:        0.1.0.0
@@ -16,7 +16,7 @@ bug-reports:    https://github.com/stackbuilders/hspec-golden/issues
 author:         Stack Builders
 maintainer:     cmotoche@stackbuilders.com
 copyright:      2019 Stack Builders Inc
-license:        BSD3
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:

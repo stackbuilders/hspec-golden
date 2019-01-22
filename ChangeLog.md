@@ -2,6 +2,7 @@
 
 ## 0.1.0.0
 #### Add
+* CLI to update `actual` files to `golden`
 * Basic functionality to have Golden tests in `hspec`.
 * `Golden str` type to write your own golden tests for the kind of
 type that you need and a variable output folder.

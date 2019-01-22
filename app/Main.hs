@@ -12,8 +12,10 @@ import qualified Test.Hspec.Golden as G
 -- CLI Parameters
 data Params =
   Params
-    { version_  :: Bool
-    , updateDir :: FilePath
+    { version_     :: Bool
+    , showHelp     :: Bool
+    , updateDir    :: FilePath
+    , shouldUpdate :: Bool
     } deriving Show
 
 defaultDirGoldenTest :: FilePath
@@ -22,25 +24,39 @@ defaultDirGoldenTest = G.directory (G.defaultGolden "" "")
 opts :: OptSpec Params
 opts =
   OptSpec
-    { progDefaults = Params False defaultDirGoldenTest
+    { progDefaults = Params False True defaultDirGoldenTest False
     , progOptions =
-      [ Option ['u'] ["update"] "Replaces `golden` file with `actual`"
+      [ Option ['u'] ["update"] "Replaces `golden` files with `actual` files"
         $ OptArg "DIR" $ \maybeDir ->
           case maybeDir of
-            Nothing -> \s -> Right s { updateDir = defaultDirGoldenTest }
-            Just dir -> \s -> Right s { updateDir = dir }
+            Nothing -> \s ->
+              Right s
+                { shouldUpdate = True
+                , updateDir = defaultDirGoldenTest
+                , showHelp = False
+                }
+            Just dir -> \s ->
+              Right s
+                { shouldUpdate = True
+                , updateDir = dir
+                , showHelp = False
+                }
       , Option ['v'] ["version"] "Displays the version of hgold"
-        $ NoArg $ \s -> Right s { version_ = True }
+        $ NoArg $ \s -> Right s { version_ = True, showHelp = False }
+      , Option ['h'] ["help"] "Displays help information"
+        $ NoArg $ \s -> Right s
       ]
-    , progParamDocs = []
+    , progParamDocs = [("DIR", "The testing directory where you're dumping your results (default: .golden/)")]
     , progParams = const Right
     }
 
 -- Update files
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
+  putStrLn "Replacing golden with actual..."
   goldenTests <- listDirectory dir
   forM_ goldenTests (mvActualToGolden dir)
+  putStrLn "...Finish"
 
 mvActualToGolden :: FilePath -> FilePath -> IO ()
 mvActualToGolden goldenDir testName =
@@ -48,13 +64,15 @@ mvActualToGolden goldenDir testName =
       goldenFilePath = goldenDir ++ "/" ++ testName ++ "/" ++ "golden"
    in do
      actualFileExist <- doesFileExist actualFilePath
-     when actualFileExist (renameFile actualFilePath goldenFilePath)
+     when actualFileExist (do
+       putStrLn $ "Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
+       renameFile actualFilePath goldenFilePath)
 
 -- MAIN
 
 main :: IO ()
 main = do
   Params {..} <- getOpts opts
-  if version_
-    then putStrLn $ showVersion version
-    else updateGolden updateDir
+  when showHelp (dumpUsage opts)
+  when version_ (putStrLn $ showVersion version)
+  when shouldUpdate (updateGolden updateDir)

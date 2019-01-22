@@ -1,7 +1,7 @@
 name:                hspec-golden
 version:             0.1.0.0
 github:              "stackbuilders/hspec-golden"
-license:             BSD3
+license:             MIT
 author:              "Stack Builders"
 maintainer:          "cmotoche@stackbuilders.com"
 copyright:           "2019 Stack Builders Inc"
