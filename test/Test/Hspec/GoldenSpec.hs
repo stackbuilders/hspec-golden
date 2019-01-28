@@ -46,9 +46,10 @@ spec =
          goldenFileContent <- readFile goldenFile
          goldenFileContent `shouldBe` fixtureContent
 
-      it "shouldn't create a `actual` file" $ do
-        void $ runSpec $ fixtureTest fixtureContent
-        doesFileExist actualFile `shouldReturn` False
+      it "should create a `actual` file" $ do
+         void $ runSpec $ fixtureTest fixtureContent
+         actualFileContent <- readFile goldenFile
+         actualFileContent `shouldBe` fixtureContent
 
     context "when the output is updated" $
       context "when the test is executed a second time" $ do
@@ -72,8 +73,3 @@ spec =
            void $ runSpec $ fixtureTest fixtureContent
            goldenFileContent <- readFile goldenFile
            goldenFileContent `shouldBe` fixtureContent
-
-        it "shouldn't create the `actual` output file" $ do
-           void $ runSpec $ fixtureTest fixtureContent
-           void $ runSpec $ fixtureTest fixtureContent
-           doesFileExist actualFile `shouldReturn` False
