@@ -83,21 +83,17 @@ runGolden Golden{..} =
    in do
      createDirectoryIfMissing True goldenTestDir
      goldenFileExist <- doesFileExist goldenFilePath
-     actualFileExist <- doesFileExist actualFilePath
-     case (goldenFileExist, actualFileExist) of
-       (False, _)    -> writeToFile goldenFilePath output
-                             >> return FirstExecution
-       (True, False) -> do
+
+     -- the actual file is always written, this way, hgold will always
+     -- upgrade based on the latest run
+     writeToFile actualFilePath output
+
+     if not goldenFileExist
+       then writeToFile goldenFilePath output
+            >> return FirstExecution
+       else do
           contentGolden <- readFromFile goldenFilePath
+
           if contentGolden == output
              then return SameOutput
-             else writeToFile actualFilePath output
-                    >> return MissmatchOutput
-
-       (True, True) -> do
-          contentGolden <- readFromFile goldenFilePath
-          contentActual <- readFromFile actualFilePath
-          if contentGolden == contentActual
-             then return SameOutput
-             else writeToFile actualFilePath output
-                    >> return MissmatchOutput
+             else return MissmatchOutput
