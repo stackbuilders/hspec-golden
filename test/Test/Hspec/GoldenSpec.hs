@@ -1,11 +1,11 @@
 module Test.Hspec.GoldenSpec (spec) where
 
-import           Control.Monad (void)
+import           Control.Monad          (void)
 
 import           Test.Hspec
-import           Test.Hspec.Golden
-import qualified Test.Hspec.Core.Spec as H
 import qualified Test.Hspec.Core.Runner as H
+import qualified Test.Hspec.Core.Spec   as H
+import           Test.Hspec.Golden
 
 import           System.Directory
 import           System.IO.Silently
@@ -67,7 +67,7 @@ spec =
 
 
     context "when the output is not updated" $
-      context "when the test is executed a second time" $ do
+      context "when the test is executed a second time" $
         it "shouldn't change the `golden` file content" $ do
            void $ runSpec $ fixtureTest fixtureContent
            void $ runSpec $ fixtureTest fixtureContent

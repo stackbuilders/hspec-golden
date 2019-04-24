@@ -2,13 +2,16 @@
 [![Build Status](https://travis-ci.org/stackbuilders/hspec-golden.svg?branch=master)](https://travis-ci.org/stackbuilders/hspec-golden)
 
 ## Description
-> Golden tests with hspec.
+Golden tests store the expected output in a separated file. Each time a golden test
+is executed the output of the subject under test (SUT) is compared with the
+expected output. If the output of the SUT changes then the test will fail until
+the expected output is updated.
 
-`hspec-golden` allows you to write golden tests using `hspec`.
+`hspec-golden` allows you to write golden tests using the popular `hspec`.
 
 ## Getting started
 
-You can write golden tests using the `defaultGolden` helper:
+You can write golden tests using `defaultGolden` helper:
 
 ```haskell
 describe "myFunc" $
@@ -17,9 +20,10 @@ describe "myFunc" $
        in defaultGolden "myFunc" output
 ```
 
-The first parameter of `defaultGolden` is the function name. I recommend you to use
-`show` and `'functionName` (enable it with `TemplateHaskellQuotes`) to always have a unique name.
-Example: `show 'myFunc == MyModule.myFunc`.
+The first parameter of `defaultGolden` is the golden file name. I recommend you to use
+`show` and `'functionName` (enable `TemplateHaskellQuotes` for the quote) to
+always have a unique name for your file. Example: `show 'myFunc == MyModule.myFunc`.
+Although, you can name it as you like.
 
 In case your output isn't a `String` you can define your own `Golden` test
 using the `Golden` data type:
@@ -33,9 +37,9 @@ import           Data.Text (Text)
 import qualified Data.Text.IO as T
 
 myGoldenTest :: String -> Text -> Golden Text
-myGoldenTest name output_ =
+myGoldenTest name actualOutput =
   Golden {
-    output = output_
+    output = actualOutput
     writeToFile = T.writeFile
     readFromFile = T.readFile
     testName = name
@@ -50,7 +54,7 @@ describe "myTextFunc" $
 
 ## Installing CLI
 
-You can install the `hspec-golden` command line interface (CLI) using `stack`:
+You can install the `hspec-golden` command line interface (CLI) with `stack`:
 
 ```
 $ stack install hspec-golden
