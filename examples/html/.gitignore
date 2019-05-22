@@ -1,0 +1,6 @@
+*.cabal
+*~
+*.swp
+tarballs/
+.stack-work/
+.golden/**/actual

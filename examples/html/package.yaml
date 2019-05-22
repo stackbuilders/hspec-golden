@@ -1,0 +1,29 @@
+name:                html
+version:             0.1.0.0
+github:              stackbuilders/hspec-golden
+license:             BSD3
+author:              Author name here
+maintainer:          cmotoche@stackbuilders.com
+copyright:           2019 Stack Builders
+
+extra-source-files:
+- README.md
+
+description:         Please see the README on Github at <https://github.com/stackbuilders/hspec-golden/tree/master/examples/html#readme>
+
+dependencies:
+- base >= 4.11 && < 10
+
+library:
+  source-dirs: src
+  dependencies:
+  - blaze-html
+
+tests:
+  html-test:
+    main:                Spec.hs
+    source-dirs:         test
+    dependencies:
+    - html
+    - hspec
+    - hspec-golden

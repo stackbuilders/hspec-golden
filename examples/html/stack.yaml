@@ -1,0 +1,4 @@
+resolver: lts-12.26
+extra-deps:
+  - simple-get-opt-0.2.0
+  - ../../
