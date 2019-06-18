@@ -20,18 +20,19 @@ import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
 
 data Golden str =
   Golden {
-    output       :: str, -- ^ Lazy bytestring output
+    output       :: str, -- ^ Output
+    encodePretty :: str -> String, -- ^ Makes the comparison pretty when the test fails
     writeToFile  :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
     readFromFile :: FilePath -> IO str, -- ^ How to read the file,
     testName     :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
     directory    :: FilePath -- ^ Directory where you write your tests
   }
 
-instance (Eq str, Show str) => Example (Golden str) where
+instance Eq str => Example (Golden str) where
   type Arg (Golden str) = ()
   evaluateExample e = evaluateExample (\() -> e)
 
-instance (Eq str, Show str) => Example (arg -> Golden str) where
+instance Eq str => Example (arg -> Golden str) where
   type Arg (arg -> Golden str) = arg
   evaluateExample golden _ action _ = do
     ref <- newIORef (Result "" Success)
@@ -55,6 +56,7 @@ defaultGolden :: String -> String -> Golden String
 defaultGolden name output_ =
   Golden {
     output = output_,
+    encodePretty = show,
     testName = name,
     writeToFile = writeFile,
     readFromFile = readFile,
@@ -70,7 +72,7 @@ data GoldenResult =
 
 -- | Runs a Golden test.
 
-runGolden :: (Eq str, Show str) => Golden str -> IO GoldenResult
+runGolden :: Eq str => Golden str -> IO GoldenResult
 runGolden Golden{..} =
   let goldenTestDir = directory ++ "/" ++ testName
       goldenFilePath = goldenTestDir ++ "/" ++ "golden"
@@ -91,4 +93,4 @@ runGolden Golden{..} =
 
           if contentGolden == output
              then return SameOutput
-             else return $ MissmatchOutput (show contentGolden) (show output)
+             else return $ MissmatchOutput (encodePretty contentGolden) (encodePretty output)
