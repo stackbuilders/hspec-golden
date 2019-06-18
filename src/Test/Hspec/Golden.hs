@@ -1,12 +1,26 @@
+{-|
+Module      : Test.Hspec.Golden
+Description : Golden tests for Hspec
+Copyright   : Stack Builders (c), 2019
+License     : MIT
+Maintainer  : cmotoche@stackbuilders.com
+Stability   : experimental
+Portability : portable
+
+Golden tests store the expected output in a separated file. Each time a golden test
+is executed the output of the subject under test (SUT) is compared with the
+expected output. If the output of the SUT changes then the test will fail until
+the expected output is updated. We expose 'defaultGolden' for output of
+type @String@. If your SUT has a different output, you can use 'Golden'.
+-}
+
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE RecordWildCards   #-}
 {-# LANGUAGE TypeFamilies      #-}
 
 module Test.Hspec.Golden
   ( Golden(..)
-  , GoldenResult(..)
   , defaultGolden
-  , runGolden
   )
   where
 
@@ -17,6 +31,26 @@ import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
 
 
 -- | Golden tests parameters
+--
+-- @
+-- import           Data.Text (Text)
+-- import qualified Data.Text.IO as T
+--
+-- goldenText :: String -> Text -> Golden Text
+-- goldenText name actualOutput =
+--   Golden {
+--     output = actualOutput,
+--     encodePretty = prettyText,
+--     writeToFile = T.writeFile,
+--     readFromFile = T.readFile,
+--     testName = name,
+--     directory = ".specific-golden-dir"
+--   }
+--
+-- describe "myTextFunc" $
+--   it "generates the right output with the right params" $
+--     goldenText "myTextFunc" (myTextFunc params)
+-- @
 
 data Golden str =
   Golden {
@@ -51,6 +85,13 @@ fromGoldenResult (MissmatchOutput expected actual) =
          (Failure Nothing (ExpectedButGot Nothing expected actual))
 
 -- | An example of Golden tests which output is 'String'
+--
+-- @
+--  describe "html" $ do
+--    context "given a valid generated html" $
+--      it "generates html" $
+--        defaultGolden "html" someHtml
+-- @
 
 defaultGolden :: String -> String -> Golden String
 defaultGolden name output_ =
