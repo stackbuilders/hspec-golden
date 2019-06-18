@@ -39,10 +39,11 @@ import qualified Data.Text.IO as T
 myGoldenTest :: String -> Text -> Golden Text
 myGoldenTest name actualOutput =
   Golden {
-    output = actualOutput
-    writeToFile = T.writeFile
-    readFromFile = T.readFile
-    testName = name
+    output = actualOutput,
+    encodePretty = prettyText,
+    writeToFile = T.writeFile,
+    readFromFile = T.readFile,
+    testName = name,
     directory = ".myGoldenTestDir"
   }
 

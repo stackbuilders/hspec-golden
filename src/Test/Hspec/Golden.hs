@@ -1,35 +1,65 @@
-{-# LANGUAGE RecordWildCards #-}
+{-|
+Module      : Test.Hspec.Golden
+Description : Golden tests for Hspec
+Copyright   : Stack Builders (c), 2019
+License     : MIT
+Maintainer  : cmotoche@stackbuilders.com
+Stability   : experimental
+Portability : portable
+
+Golden tests store the expected output in a separated file. Each time a golden test
+is executed the output of the subject under test (SUT) is compared with the
+expected output. If the output of the SUT changes then the test will fail until
+the expected output is updated. We expose 'defaultGolden' for output of
+type @String@. If your SUT has a different output, you can use 'Golden'.
+-}
+
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE RecordWildCards   #-}
+{-# LANGUAGE TypeFamilies      #-}
 
 module Test.Hspec.Golden
   ( Golden(..)
-  , GoldenResult(..)
   , defaultGolden
-  , runGolden
   )
   where
 
 import           Data.IORef
-import           Test.Hspec.Core.Spec ( Example(..)
-                                      , Result(..)
-                                      , ResultStatus(..)
-                                      , FailureReason(..)
-                                      )
-import           System.Directory ( createDirectoryIfMissing
-                                  , doesFileExist
-                                  )
+import           System.Directory     (createDirectoryIfMissing, doesFileExist)
+import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
+                                       Result (..), ResultStatus (..))
 
 
 -- | Golden tests parameters
+--
+-- @
+-- import           Data.Text (Text)
+-- import qualified Data.Text.IO as T
+--
+-- goldenText :: String -> Text -> Golden Text
+-- goldenText name actualOutput =
+--   Golden {
+--     output = actualOutput,
+--     encodePretty = prettyText,
+--     writeToFile = T.writeFile,
+--     readFromFile = T.readFile,
+--     testName = name,
+--     directory = ".specific-golden-dir"
+--   }
+--
+-- describe "myTextFunc" $
+--   it "generates the right output with the right params" $
+--     goldenText "myTextFunc" (myTextFunc params)
+-- @
 
 data Golden str =
   Golden {
-    output :: str, -- ^ Lazy bytestring output
-    writeToFile :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
+    output       :: str, -- ^ Output
+    encodePretty :: str -> String, -- ^ Makes the comparison pretty when the test fails
+    writeToFile  :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
     readFromFile :: FilePath -> IO str, -- ^ How to read the file,
-    testName :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
-    directory :: FilePath -- ^ Directory where you write your tests
+    testName     :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
+    directory    :: FilePath -- ^ Directory where you write your tests
   }
 
 instance Eq str => Example (Golden str) where
@@ -50,16 +80,24 @@ instance Eq str => Example (arg -> Golden str) where
 fromGoldenResult :: GoldenResult -> Result
 fromGoldenResult FirstExecution  = Result "First time execution. Golden file created." Success
 fromGoldenResult SameOutput      = Result "Golden and Actual output hasn't changed" Success
-fromGoldenResult MissmatchOutput =
-  Result "Files golden and actual missmatch"
-         (Failure Nothing (Reason "Files golden and actual missmatch"))
+fromGoldenResult (MissmatchOutput expected actual) =
+  Result "Files golden and actual not match"
+         (Failure Nothing (ExpectedButGot Nothing expected actual))
 
 -- | An example of Golden tests which output is 'String'
+--
+-- @
+--  describe "html" $ do
+--    context "given a valid generated html" $
+--      it "generates html" $
+--        defaultGolden "html" someHtml
+-- @
 
 defaultGolden :: String -> String -> Golden String
 defaultGolden name output_ =
   Golden {
     output = output_,
+    encodePretty = show,
     testName = name,
     writeToFile = writeFile,
     readFromFile = readFile,
@@ -69,7 +107,7 @@ defaultGolden name output_ =
 -- | Possible results from a golden test execution
 
 data GoldenResult =
-   MissmatchOutput
+   MissmatchOutput String String
    | SameOutput
    | FirstExecution
 
@@ -96,4 +134,4 @@ runGolden Golden{..} =
 
           if contentGolden == output
              then return SameOutput
-             else return MissmatchOutput
+             else return $ MissmatchOutput (encodePretty contentGolden) (encodePretty output)
