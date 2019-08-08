@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.30.0.
+-- This file has been generated from package.yaml by hpack version 0.31.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 83cc81bf5ff29892ea3a331b29c4837fba7d68c839fa614144362ac7699e4d04
+-- hash: 697f03b4695fcfb94917059091235f476de0a8cfb5eb4c65e66dfeb2de01cd8d
 
 name:           hspec-golden
 version:        0.1.0.0
@@ -50,8 +50,8 @@ executable hgold
   build-depends:
       base >=4.6 && <5
     , directory >=1.2.5.0
+    , docopt
     , hspec-golden
-    , simple-get-opt
   default-language: Haskell2010
 
 test-suite hspec-golden-test

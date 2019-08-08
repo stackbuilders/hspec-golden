@@ -36,7 +36,7 @@ executables:
     dependencies:
     - hspec-golden
     - directory >= 1.2.5.0
-    - simple-get-opt
+    - docopt
 
 tests:
   hspec-golden-test:

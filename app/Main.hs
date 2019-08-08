@@ -1,13 +1,15 @@
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE QuasiQuotes #-}
 
 module Main where
 
-import           Control.Monad (forM_, when)
-import           Data.Version (showVersion)
-import           Paths_hspec_golden (version)
-import           SimpleGetOpt
-import           System.Directory (doesFileExist, listDirectory, renameFile)
-import qualified Test.Hspec.Golden as G
+import           Control.Monad         (forM_, when)
+import           Data.Version          (showVersion)
+import           Paths_hspec_golden    (version)
+import           System.Console.Docopt
+import           System.Directory      (doesFileExist, listDirectory,
+                                        renameFile)
+import           System.Environment    (getArgs)
+import qualified Test.Hspec.Golden     as G
 
 -- CLI Parameters
 data Params =
@@ -21,34 +23,16 @@ data Params =
 defaultDirGoldenTest :: FilePath
 defaultDirGoldenTest = G.directory (G.defaultGolden "" "")
 
-opts :: OptSpec Params
-opts =
-  OptSpec
-    { progDefaults = Params False True defaultDirGoldenTest False
-    , progOptions =
-      [ Option ['u'] ["update"] "Replaces `golden` files with `actual` files"
-        $ OptArg "DIR" $ \maybeDir ->
-          case maybeDir of
-            Nothing -> \s ->
-              Right s
-                { shouldUpdate = True
-                , updateDir = defaultDirGoldenTest
-                , showHelp = False
-                }
-            Just dir -> \s ->
-              Right s
-                { shouldUpdate = True
-                , updateDir = dir
-                , showHelp = False
-                }
-      , Option ['v'] ["version"] "Displays the version of hgold"
-        $ NoArg $ \s -> Right s { version_ = True, showHelp = False }
-      , Option ['h'] ["help"] "Displays help information"
-        $ NoArg $ \s -> Right s
-      ]
-    , progParamDocs = [("DIR", "The testing directory where you're dumping your results (default: .golden/)")]
-    , progParams = const Right
-    }
+patterns :: Docopt
+patterns = [docopt|
+Usage:
+  hgold [-u=<file>]
+
+Options:
+  -u=<file>  specify output file
+|]
+
+getArgOrExit = getArgOrExitWith patterns
 
 -- Update files
 updateGolden :: FilePath -> IO ()
@@ -72,7 +56,10 @@ mvActualToGolden goldenDir testName =
 
 main :: IO ()
 main = do
-  Params {..} <- getOpts opts
-  when showHelp (dumpUsage opts)
-  when version_ (putStrLn $ showVersion version)
-  when shouldUpdate (updateGolden updateDir)
+  args <- parseArgsOrExit patterns =<< getArgs
+  when (args `isPresent` command "update") $
+    let goldenDir = (args `getArgWithDefault` defaultDirGoldenTest) (argument "golden_dir")
+     in print goldenDir
+--  when showHelp (dumpUsage opts)
+--  when version_ (putStrLn $ showVersion version)
+--  when shouldUpdate (updateGolden updateDir)
