@@ -36,7 +36,7 @@ executables:
     dependencies:
     - hspec-golden
     - directory >= 1.2.5.0
-    - docopt
+    - optparse-applicative
 
 tests:
   hspec-golden-test:
