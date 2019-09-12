@@ -1,5 +1,3 @@
-{-# LANGUAGE QuasiQuotes #-}
-
 module Main where
 
 import           Control.Monad         (forM_, when)
@@ -30,7 +28,8 @@ params = Params
           <> short 'u'
           <> metavar "[DIR]"
           <> value defaultDirGoldenTest
-          <> help "Replaces `golden` files with `actual` files")
+          <> showDefault
+          <> help "The testing directory where you're dumping your results.")
 
 versionOpt :: Parser (a->a)
 versionOpt = infoOption (showVersion version) 
@@ -58,14 +57,11 @@ mvActualToGolden goldenDir testName =
        renameFile actualFilePath goldenFilePath)
 
 
--- MAIN
+-- Main
 
 main :: IO ()
 main = updateGolden =<< execParser opts
   where
 
   opts = info ((updateDir <$> params) <**> versionOpt <**> helper)
-        ( fullDesc <> footer "[DIR]  ->  The testing directory where you're dumping your results. When run without parameters, default directory: .golden/" )
-
-
-
+        ( fullDesc <> header "Update your golden files" )
