@@ -6,7 +6,7 @@ import           Control.Monad         (forM_, when)
 import           Data.Version          (showVersion)
 import           Paths_hspec_golden    (version)
 import           Options.Applicative
-import           Data.Semigroup ((<>))
+import           Data.Monoid ((<>))
 import           System.Directory      (doesFileExist, listDirectory,
                                         renameFile)
 import           System.Environment    (getArgs)
