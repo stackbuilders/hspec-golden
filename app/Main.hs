@@ -7,7 +7,6 @@ import           Options.Applicative
 import           Data.Monoid ((<>))
 import           System.Directory      (doesFileExist, listDirectory,
                                         renameFile)
-import           System.Environment    (getArgs)
 import qualified Test.Hspec.Golden     as G
 
 defaultDirGoldenTest :: FilePath
