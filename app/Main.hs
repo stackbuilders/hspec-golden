@@ -5,36 +5,41 @@ module Main where
 import           Control.Monad         (forM_, when)
 import           Data.Version          (showVersion)
 import           Paths_hspec_golden    (version)
-import           System.Console.Docopt
+import           Options.Applicative
+import           Data.Semigroup ((<>))
 import           System.Directory      (doesFileExist, listDirectory,
                                         renameFile)
 import           System.Environment    (getArgs)
 import qualified Test.Hspec.Golden     as G
 
--- CLI Parameters
-data Params =
-  Params
-    { version_     :: Bool
-    , showHelp     :: Bool
-    , updateDir    :: FilePath
-    , shouldUpdate :: Bool
-    } deriving Show
-
 defaultDirGoldenTest :: FilePath
 defaultDirGoldenTest = G.directory (G.defaultGolden "" "")
 
-patterns :: Docopt
-patterns = [docopt|
-Usage:
-  hgold [-u=<file>]
+-- CLI Params
 
-Options:
-  -u=<file>  specify output file
-|]
+data Params =
+    Params
+      { updateDir    :: FilePath 
+   --   , shouldUpdate :: Bool
+      } deriving Show
+  
+params :: Parser Params
+params = Params 
+      <$> strOption
+          (long "update"
+          <> short 'u'
+          <> metavar "[DIR]"
+          <> value defaultDirGoldenTest
+          <> help "Replaces `golden` files with `actual` files")
 
-getArgOrExit = getArgOrExitWith patterns
+versionOpt :: Parser (a->a)
+versionOpt = infoOption (showVersion version) 
+              (long "version"
+              <> short 'v'  
+              <> help "Show version")
+            
 
--- Update files
+--Update Files
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
   putStrLn "Replacing golden with actual..."
@@ -52,14 +57,15 @@ mvActualToGolden goldenDir testName =
        putStrLn $ "  Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
        renameFile actualFilePath goldenFilePath)
 
+
 -- MAIN
 
 main :: IO ()
-main = do
-  args <- parseArgsOrExit patterns =<< getArgs
-  when (args `isPresent` command "update") $
-    let goldenDir = (args `getArgWithDefault` defaultDirGoldenTest) (argument "golden_dir")
-     in print goldenDir
---  when showHelp (dumpUsage opts)
---  when version_ (putStrLn $ showVersion version)
---  when shouldUpdate (updateGolden updateDir)
+main = updateGolden =<< execParser opts
+  where
+
+  opts = info ((updateDir <$> params) <**> versionOpt <**> helper)
+        ( fullDesc <> footer "[DIR]  ->  The testing directory where you're dumping your results. When run without parameters, default directory: .golden/" )
+
+
+
