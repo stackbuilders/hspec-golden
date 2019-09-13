@@ -71,21 +71,23 @@ $ cabal install hspec-golden
 The CLI is called `hgold`:
 
 ```
-$ hgold
+$ hgold -h
 
-Parameters:
-  DIR    The testing directory where you're dumping your results (default: .golden/)
+Update your golden files
 
-Flags:
-  -u[DIR]  --update[=DIR]  Replaces `golden` files with `actual` files
-  -v       --version       Displays the version of hgold
-  -h       --help          Displays help information
+Usage: hgold [-u|--update [DIR]] [-v|--version]
+
+Available options:
+  -u,--update [DIR]        The testing directory where you're dumping your
+                           results. (default: ".golden")
+  -v,--version             Show version
+  -h,--help                Show this help text
 ```
 
 Update the golden tests under `.golden` directory:
 
 ```
-$ hgold -u
+$ hgold
 ```
 
 Update the golden tests under `.myGoldenTest` directory:

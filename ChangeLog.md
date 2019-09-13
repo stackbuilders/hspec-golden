@@ -1,5 +1,9 @@
 # Changelog for hspec-golden
 
+## 0.1.0.1
+#### Add
+* CLI changed to work with optparse-applicative.
+
 ## 0.1.0.0
 #### Add
 * CLI to update `actual` files to `golden`

@@ -1,56 +1,43 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module Main where
 
-import           Control.Monad (forM_, when)
-import           Data.Version (showVersion)
-import           Paths_hspec_golden (version)
-import           SimpleGetOpt
-import           System.Directory (doesFileExist, listDirectory, renameFile)
-import qualified Test.Hspec.Golden as G
-
--- CLI Parameters
-data Params =
-  Params
-    { version_     :: Bool
-    , showHelp     :: Bool
-    , updateDir    :: FilePath
-    , shouldUpdate :: Bool
-    } deriving Show
+import           Control.Monad         (forM_, when)
+import           Data.Version          (showVersion)
+import           Paths_hspec_golden    (version)
+import           Options.Applicative
+import           Data.Monoid ((<>))
+import           System.Directory      (doesFileExist, listDirectory,
+                                        renameFile)
+import qualified Test.Hspec.Golden     as G
 
 defaultDirGoldenTest :: FilePath
 defaultDirGoldenTest = G.directory (G.defaultGolden "" "")
 
-opts :: OptSpec Params
-opts =
-  OptSpec
-    { progDefaults = Params False True defaultDirGoldenTest False
-    , progOptions =
-      [ Option ['u'] ["update"] "Replaces `golden` files with `actual` files"
-        $ OptArg "DIR" $ \maybeDir ->
-          case maybeDir of
-            Nothing -> \s ->
-              Right s
-                { shouldUpdate = True
-                , updateDir = defaultDirGoldenTest
-                , showHelp = False
-                }
-            Just dir -> \s ->
-              Right s
-                { shouldUpdate = True
-                , updateDir = dir
-                , showHelp = False
-                }
-      , Option ['v'] ["version"] "Displays the version of hgold"
-        $ NoArg $ \s -> Right s { version_ = True, showHelp = False }
-      , Option ['h'] ["help"] "Displays help information"
-        $ NoArg $ \s -> Right s
-      ]
-    , progParamDocs = [("DIR", "The testing directory where you're dumping your results (default: .golden/)")]
-    , progParams = const Right
-    }
+-- CLI Params
 
--- Update files
+data Params =
+    Params
+      { updateDir    :: FilePath 
+   --   , shouldUpdate :: Bool
+      } deriving Show
+  
+params :: Parser Params
+params = Params 
+      <$> strOption
+          (long "update"
+          <> short 'u'
+          <> metavar "[DIR]"
+          <> value defaultDirGoldenTest
+          <> showDefault
+          <> help "The testing directory where you're dumping your results.")
+
+versionOpt :: Parser (a->a)
+versionOpt = infoOption (showVersion version) 
+              (long "version"
+              <> short 'v'  
+              <> help "Show version")
+            
+
+--Update Files
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
   putStrLn "Replacing golden with actual..."
@@ -68,11 +55,12 @@ mvActualToGolden goldenDir testName =
        putStrLn $ "  Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
        renameFile actualFilePath goldenFilePath)
 
--- MAIN
+
+-- Main
 
 main :: IO ()
-main = do
-  Params {..} <- getOpts opts
-  when showHelp (dumpUsage opts)
-  when version_ (putStrLn $ showVersion version)
-  when shouldUpdate (updateGolden updateDir)
+main = updateGolden =<< execParser opts
+  where
+
+  opts = info ((updateDir <$> params) <**> versionOpt <**> helper)
+        ( fullDesc <> header "Update your golden files" )
