@@ -2,20 +2,13 @@ name:                json
 version:             0.1.0.0
 github:              "stackbuilder/hspec-golden"
 license:             BSD3
-author:              "StackBuilders"
+author:              "Jorge Guerra"
 maintainer:          "cmotoche@stackbuilders.com"
 copyright:           "2019 StackBuilders"
 
 extra-source-files:
 - README.md
 
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
-
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/githubuser/json#readme>
 
 dependencies:
