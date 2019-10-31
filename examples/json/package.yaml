@@ -1,0 +1,36 @@
+name:                json
+version:             0.1.0.0
+github:              "stackbuilder/hspec-golden"
+license:             BSD3
+author:              "Jorge Guerra"
+maintainer:          "cmotoche@stackbuilders.com"
+copyright:           "2019 StackBuilders"
+
+extra-source-files:
+- README.md
+
+description:         Please see the README on GitHub at <https://github.com/githubuser/json#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+  - aeson
+  - bytestring
+  - text
+  
+tests:
+  json-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - json
+    - hspec
+    - hspec-golden
+    - bytestring
