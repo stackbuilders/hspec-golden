@@ -37,6 +37,7 @@ executables:
     - hspec-golden
     - directory >= 1.2.5.0
     - optparse-applicative
+    - simple-cmd 
 
 tests:
   hspec-golden-test:

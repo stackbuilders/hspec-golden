@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 47827519449632063e1d3d47aaedfb8a42618dfbcf2406caefab51c360611a22
+-- hash: 532724ff037fd0e52221e69e0dc7ed8f5e192d7c930be1f1cfb39679d343a930
 
 name:           hspec-golden
 version:        0.1.0.1
@@ -52,6 +52,7 @@ executable hgold
     , directory >=1.2.5.0
     , hspec-golden
     , optparse-applicative
+    , simple-cmd
   default-language: Haskell2010
 
 test-suite hspec-golden-test

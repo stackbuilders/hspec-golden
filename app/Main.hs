@@ -3,6 +3,7 @@ module Main where
 import           Control.Monad         (forM_, when)
 import           Data.Version          (showVersion)
 import           Paths_hspec_golden    (version)
+--import           SimpleCmd             (cmdStdErr)        
 import           Options.Applicative
 import           Data.Monoid ((<>))
 import           System.Directory      (doesFileExist, listDirectory,
@@ -51,6 +52,7 @@ mvActualToGolden goldenDir testName =
       goldenFilePath = goldenDir ++ "/" ++ testName ++ "/" ++ "golden"
    in do
      actualFileExist <- doesFileExist actualFilePath
+     --cmdStdErr "stack test" [] 
      when actualFileExist (do
        putStrLn $ "  Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
        renameFile actualFilePath goldenFilePath)
