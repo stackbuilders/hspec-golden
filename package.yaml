@@ -4,7 +4,7 @@ github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
 maintainer:          "cmotoche@stackbuilders.com"
-copyright:           "2019 Stack Builders Inc"
+copyright:           "2019-2020 Stack Builders Inc"
 synopsis:            "Golden tests for hspec"
 category:            Testing
 

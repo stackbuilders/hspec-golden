@@ -4,7 +4,7 @@ github:              "githubuser/fizzbuzz"
 license:             BSD3
 author:              "Jorge Guerra"
 maintainer:          "cmotoche@stackbuilders.com"
-copyright:           "2019 StackBuilders"
+copyright:           "2019-2020 StackBuilders"
 
 extra-source-files:
 - README.md

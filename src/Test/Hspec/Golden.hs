@@ -1,7 +1,7 @@
 {-|
 Module      : Test.Hspec.Golden
 Description : Golden tests for Hspec
-Copyright   : Stack Builders (c), 2019
+Copyright   : Stack Builders (c), 2019-2020
 License     : MIT
 Maintainer  : cmotoche@stackbuilders.com
 Stability   : experimental
