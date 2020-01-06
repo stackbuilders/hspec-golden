@@ -4,7 +4,7 @@ github:              stackbuilders/hspec-golden
 license:             BSD3
 author:              Author name here
 maintainer:          cmotoche@stackbuilders.com
-copyright:           2019 Stack Builders
+copyright:           2019-2020 Stack Builders
 
 extra-source-files:
 - README.md
