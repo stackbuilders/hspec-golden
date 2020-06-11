@@ -14,8 +14,8 @@ goldenBytestring name actualOutput =
         writeToFile = B.writeFile,
         readFromFile = B.readFile,
         testName = name,
-        directory = ".otherGolden"
-          
+        directory = ".otherGolden",
+        failFirstTime = False
     }
 
 
