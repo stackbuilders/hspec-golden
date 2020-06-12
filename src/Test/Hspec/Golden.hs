@@ -80,8 +80,8 @@ instance Eq str => Example (arg -> Golden str) where
 -- | Transform a GoldenResult into a Result from Hspec
 
 fromGoldenResult :: GoldenResult -> Result
-fromGoldenResult FirstExecutionSucceed  = Result "First time execution. Golden file created." Success
 fromGoldenResult SameOutput             = Result "Golden and Actual output hasn't changed" Success
+fromGoldenResult FirstExecutionSucceed  = Result "First time execution. Golden file created." Success
 fromGoldenResult FirstExecutionFail =
   Result "First time execution. Golden file created."
          (Failure Nothing (Reason "failFirstTime is set to True"))
