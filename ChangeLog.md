@@ -1,5 +1,10 @@
 # Changelog for hspec-golden
 
+## 0.1.0.2
+#### Add
+* CLI updates tests recursively #19
+* Allow first execution to fail #16
+
 ## 0.1.0.1
 #### Add
 * CLI changed to work with optparse-applicative.
