@@ -44,7 +44,8 @@ myGoldenTest name actualOutput =
     writeToFile = T.writeFile,
     readFromFile = T.readFile,
     testName = name,
-    directory = ".myGoldenTestDir"
+    directory = ".myGoldenTestDir",
+    failFirstTime = False
   }
 
 describe "myTextFunc" $
