@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a35e55cff149f915e3e5a385717c03730159ae8ac6ccee1967031d55df1f9f99
+-- hash: 34c8c9ac8723c74e1b8dfdf2b6153ad8f1d4c677cbdf667841dc84bda2db22d4
 
 name:           hspec-golden
-version:        0.1.0.2
+version:        0.1.0.3
 synopsis:       Golden tests for hspec
 description:    Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
 category:       Testing
@@ -37,7 +37,7 @@ library
   build-depends:
       base >=4.6 && <5
     , directory
-    , hspec-core
+    , hspec-core >=2.5 && <3.0
   default-language: Haskell2010
 
 executable hgold

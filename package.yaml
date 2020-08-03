@@ -1,5 +1,5 @@
 name:                hspec-golden
-version:             0.1.0.2
+version:             0.1.0.3
 github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
@@ -23,7 +23,7 @@ library:
     - Test.Hspec.Golden
   dependencies:
   - directory
-  - hspec-core
+  - hspec-core >= 2.5 && < 3.0
 
 executables:
   hgold:
