@@ -26,6 +26,7 @@ module Test.Hspec.Golden
 
 import           Data.IORef
 import           System.Directory     (createDirectoryIfMissing, doesFileExist)
+import           System.FilePath      ((<.>), (</>))
 import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
                                        Result (..), ResultStatus (..))
 
@@ -43,6 +44,7 @@ import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
 --     encodePretty = prettyText,
 --     writeToFile = T.writeFile,
 --     readFromFile = T.readFile,
+--     fileExtension = "txt",
 --     testName = name,
 --     directory = ".specific-golden-dir",
 --     failFirstTime = False
@@ -59,6 +61,7 @@ data Golden str =
     encodePretty  :: str -> String, -- ^ Makes the comparison pretty when the test fails
     writeToFile   :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
     readFromFile  :: FilePath -> IO str, -- ^ How to read the file,
+    fileExtension :: String, -- ^ The file extension to be used for the created test files (For example: "txt", "hs")
     testName      :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
     directory     :: FilePath, -- ^ Directory where you write your tests
     failFirstTime :: Bool -- ^ Whether to record a failure the first time this test is run
@@ -106,6 +109,7 @@ defaultGolden name output_ =
     testName = name,
     writeToFile = writeFile,
     readFromFile = readFile,
+    fileExtension = "",
     directory = ".golden",
     failFirstTime = False
   }
@@ -122,9 +126,9 @@ data GoldenResult =
 
 runGolden :: Eq str => Golden str -> IO GoldenResult
 runGolden Golden{..} =
-  let goldenTestDir = directory ++ "/" ++ testName
-      goldenFilePath = goldenTestDir ++ "/" ++ "golden"
-      actualFilePath = goldenTestDir ++ "/" ++ "actual"
+  let goldenTestDir = directory </> testName
+      goldenFilePath = goldenTestDir </> "golden" <.> fileExtension
+      actualFilePath = goldenTestDir </> "actual" <.> fileExtension
    in do
      createDirectoryIfMissing True goldenTestDir
      goldenFileExist <- doesFileExist goldenFilePath
