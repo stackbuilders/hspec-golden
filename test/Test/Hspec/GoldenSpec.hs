@@ -17,10 +17,10 @@ fixtureUpdatedContent = "different text"
 fixtureContent = "simple text"
 fixtureTestName = "id"
 
-goldenTestDir, goldenFile, actualFile :: FilePath
+goldenTestDir, goldenFilePath, actualFilePath :: FilePath
 goldenTestDir = ".golden" ++ "/" ++ "id"
-goldenFile = goldenTestDir ++ "/" ++ "golden"
-actualFile = goldenTestDir ++ "/" ++ "actual"
+goldenFilePath = goldenTestDir ++ "/" ++ "golden"
+actualFilePath = goldenTestDir ++ "/" ++ "actual"
 
 fixtureTest :: String -> H.Spec
 fixtureTest content =
@@ -43,12 +43,12 @@ spec =
     context "when the test is executed for the first time" $ do
       it "should create a `golden` file" $ do
          void $ runSpec $ fixtureTest fixtureContent
-         goldenFileContent <- readFile goldenFile
+         goldenFileContent <- readFile goldenFilePath
          goldenFileContent `shouldBe` fixtureContent
 
       it "should create a `actual` file" $ do
          void $ runSpec $ fixtureTest fixtureContent
-         actualFileContent <- readFile goldenFile
+         actualFileContent <- readFile goldenFilePath
          actualFileContent `shouldBe` fixtureContent
 
     context "when the output is updated" $
@@ -56,13 +56,13 @@ spec =
         it "should create the `actual` output file" $ do
            void $ runSpec $ fixtureTest fixtureContent
            void $ runSpec $ fixtureTest fixtureUpdatedContent
-           actualFileContent <- readFile actualFile
+           actualFileContent <- readFile actualFilePath
            actualFileContent `shouldBe` fixtureUpdatedContent
 
         it "shouldn't overide the `golden` file" $ do
            void $ runSpec $ fixtureTest fixtureContent
            void $ runSpec $ fixtureTest fixtureUpdatedContent
-           goldenFileContent <- readFile goldenFile
+           goldenFileContent <- readFile goldenFilePath
            goldenFileContent `shouldBe` fixtureContent
 
 
@@ -71,5 +71,5 @@ spec =
         it "shouldn't change the `golden` file content" $ do
            void $ runSpec $ fixtureTest fixtureContent
            void $ runSpec $ fixtureTest fixtureContent
-           goldenFileContent <- readFile goldenFile
+           goldenFileContent <- readFile goldenFilePath
            goldenFileContent `shouldBe` fixtureContent
