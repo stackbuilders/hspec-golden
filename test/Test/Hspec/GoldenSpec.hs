@@ -18,7 +18,7 @@ fixtureContent = "simple text"
 fixtureTestName = "id"
 
 goldenTestDir, goldenFile, actualFile :: FilePath
-goldenTestDir = directory (defaultGolden "" "") ++ "/" ++ "id"
+goldenTestDir = ".golden" ++ "/" ++ "id"
 goldenFile = goldenTestDir ++ "/" ++ "golden"
 actualFile = goldenTestDir ++ "/" ++ "actual"
 
