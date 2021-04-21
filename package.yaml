@@ -23,6 +23,7 @@ library:
     - Test.Hspec.Golden
   dependencies:
   - directory
+  - filepath >=1.0 && <2.0
   - hspec-core >= 2.5 && < 3.0
 
 executables:

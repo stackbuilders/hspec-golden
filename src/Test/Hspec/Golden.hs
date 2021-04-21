@@ -26,6 +26,7 @@ module Test.Hspec.Golden
 
 import           Data.IORef
 import           System.Directory     (createDirectoryIfMissing, doesFileExist)
+import           System.FilePath      (takeDirectory, (</>))
 import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
                                        Result (..), ResultStatus (..))
 
@@ -43,8 +44,8 @@ import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
 --     encodePretty = prettyText,
 --     writeToFile = T.writeFile,
 --     readFromFile = T.readFile,
---     testName = name,
---     directory = ".specific-golden-dir",
+--     goldenFile = ".specific-golden-dir" </> name </> "golden",
+--     actualFile = Just (".specific-golden-dir" </> name </> "actual"),
 --     failFirstTime = False
 --   }
 --
@@ -59,8 +60,8 @@ data Golden str =
     encodePretty  :: str -> String, -- ^ Makes the comparison pretty when the test fails
     writeToFile   :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
     readFromFile  :: FilePath -> IO str, -- ^ How to read the file,
-    testName      :: String, -- ^ Test name (make sure it's unique otherwise it could be override)
-    directory     :: FilePath, -- ^ Directory where you write your tests
+    goldenFile    :: FilePath, -- ^ Where to read/write the golden file for this test.
+    actualFile    :: Maybe FilePath, -- ^ Where to save the actual file for this test. If it is @Nothing@ then no file is written.
     failFirstTime :: Bool -- ^ Whether to record a failure the first time this test is run
   }
 
@@ -103,10 +104,10 @@ defaultGolden name output_ =
   Golden {
     output = output_,
     encodePretty = show,
-    testName = name,
     writeToFile = writeFile,
     readFromFile = readFile,
-    directory = ".golden",
+    goldenFile = ".golden" </> name </> "golden",
+    actualFile = Just (".golden" </> name </> "actual"),
     failFirstTime = False
   }
 
@@ -122,25 +123,28 @@ data GoldenResult =
 
 runGolden :: Eq str => Golden str -> IO GoldenResult
 runGolden Golden{..} =
-  let goldenTestDir = directory ++ "/" ++ testName
-      goldenFilePath = goldenTestDir ++ "/" ++ "golden"
-      actualFilePath = goldenTestDir ++ "/" ++ "actual"
+  let goldenTestDir = takeDirectory goldenFile
    in do
      createDirectoryIfMissing True goldenTestDir
-     goldenFileExist <- doesFileExist goldenFilePath
+     goldenFileExist <- doesFileExist goldenFile
 
-     -- the actual file is always written, this way, hgold will always
-     -- upgrade based on the latest run
-     writeToFile actualFilePath output
+     case actualFile of
+       Nothing -> return ()
+       Just actual -> do
+           -- It is recommended to always write the actual file, this way,
+           -- hgold will always upgrade based on the latest run
+           let actualDir = takeDirectory actual
+           createDirectoryIfMissing True actualDir
+           writeToFile actual output
 
      if not goldenFileExist
        then do
-           writeToFile goldenFilePath output
+           writeToFile goldenFile output
            return $ if failFirstTime
                then FirstExecutionFail
                else FirstExecutionSucceed
        else do
-          contentGolden <- readFromFile goldenFilePath
+          contentGolden <- readFromFile goldenFile
 
           if contentGolden == output
              then return SameOutput

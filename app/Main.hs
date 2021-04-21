@@ -10,7 +10,7 @@ import           System.Directory      (doesDirectoryExist, doesFileExist,
 import qualified Test.Hspec.Golden     as G
 
 defaultDirGoldenTest :: FilePath
-defaultDirGoldenTest = G.directory (G.defaultGolden "" "")
+defaultDirGoldenTest = ".golden"
 
 -- CLI Params
 
