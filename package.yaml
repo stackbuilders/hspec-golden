@@ -1,5 +1,5 @@
 name:                hspec-golden
-version:             0.1.0.3
+version:             0.2.0.0
 github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
