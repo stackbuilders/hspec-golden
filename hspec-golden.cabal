@@ -7,7 +7,7 @@ cabal-version: 1.12
 -- hash: 34c8c9ac8723c74e1b8dfdf2b6153ad8f1d4c677cbdf667841dc84bda2db22d4
 
 name:           hspec-golden
-version:        0.1.0.3
+version:        0.2.0.0
 synopsis:       Golden tests for hspec
 description:    Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
 category:       Testing

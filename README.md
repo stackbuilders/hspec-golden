@@ -43,8 +43,8 @@ myGoldenTest name actualOutput =
     encodePretty = prettyText,
     writeToFile = T.writeFile,
     readFromFile = T.readFile,
-    testName = name,
-    directory = ".myGoldenTestDir",
+    goldenFile = name,
+    actualFile = Just (name </> "-actual"),
     failFirstTime = False
   }
 
