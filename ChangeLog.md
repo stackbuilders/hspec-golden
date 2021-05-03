@@ -1,4 +1,9 @@
 # Changelog for hspec-golden
+## 0.2.0.0
+#### Add
+* More flexible file locations
+* Contributed by: @bitc and @christianheyn
+
 ## 0.1.0.2
 #### Add
 * Lowerbound for `hspec-core` in `hspec-golden` library
