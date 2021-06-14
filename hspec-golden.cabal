@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.1.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 34c8c9ac8723c74e1b8dfdf2b6153ad8f1d4c677cbdf667841dc84bda2db22d4
+-- hash: 8d37c1eb62fe010919bb253d6323512db11acbe0524666f813187d3e9e1738b6
 
 name:           hspec-golden
 version:        0.2.0.0
@@ -64,6 +64,8 @@ test-suite hspec-golden-test
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-tool-depends:
+      hspec-discover:hspec-discover >=2.0 && <3.0
   build-depends:
       base >=4.6 && <5
     , directory
