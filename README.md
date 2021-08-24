@@ -1,7 +1,9 @@
 # hspec-golden
+
 [![Build Status](https://travis-ci.org/stackbuilders/hspec-golden.svg?branch=master)](https://travis-ci.org/stackbuilders/hspec-golden)
 
 ## Description
+
 Golden tests store the expected output in a separated file. Each time a golden test
 is executed the output of the subject under test (SUT) is compared with the
 expected output. If the output of the SUT changes then the test will fail until
@@ -43,8 +45,8 @@ myGoldenTest name actualOutput =
     encodePretty = prettyText,
     writeToFile = T.writeFile,
     readFromFile = T.readFile,
-    goldenFile = name,
-    actualFile = Just (name </> "-actual"),
+    testName = name,
+    directory = ".golden",
     failFirstTime = False
   }
 
@@ -63,7 +65,6 @@ $ stack install hspec-golden
 ```
 
 or `cabal`:
-
 
 ```
 $ cabal install hspec-golden
@@ -102,6 +103,7 @@ $ hgold -u .myGoldenTest
 MIT, see the [LICENSE file](./LICENSE).
 
 ## Contributing
+
 Pull requests for modifications to this program are welcome! Fork and open a PR.
 
 If you're looking for a place to start, you may want to check the [open issue](https://github.com/stackbuilders/hspec-golden/issues).
