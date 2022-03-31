@@ -85,7 +85,7 @@ fromGoldenResult SameOutput             = Result "Golden and Actual output hasn'
 fromGoldenResult FirstExecutionSucceed  = Result "First time execution. Golden file created." Success
 fromGoldenResult FirstExecutionFail =
   Result "First time execution. Golden file created."
-         (Failure Nothing (Reason "failFirstTime is set to True"))
+         (Failure Nothing (Reason "Golden file did not exist and was created. Failed because failFirstTime is set to True"))
 fromGoldenResult (MissmatchOutput expected actual) =
   Result "Files golden and actual not match"
          (Failure Nothing (ExpectedButGot Nothing expected actual))
