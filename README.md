@@ -9,7 +9,7 @@ the expected output is updated.
 
 `hspec-golden` allows you to write golden tests using the popular `hspec`.
 
-## Getting started
+## Usage
 
 You can write golden tests using `defaultGolden` helper:
 
@@ -54,7 +54,7 @@ describe "myTextFunc" $
        in myGoldenTest (show 'myTextFunc) textOutput
 ```
 
-## Installing CLI
+## Install CLI
 
 You can install the `hspec-golden` command line interface (CLI) with `stack`:
 
@@ -97,11 +97,14 @@ Update the golden tests under `.myGoldenTest` directory:
 $ hgold -u .myGoldenTest
 ```
 
-## Licensing
+## License
 
 MIT, see the [LICENSE file](./LICENSE).
 
 ## Contributing
-Pull requests for modifications to this program are welcome! Fork and open a PR.
 
-If you're looking for a place to start, you may want to check the [open issue](https://github.com/stackbuilders/hspec-golden/issues).
+Do you want to contribute to this project? Please take a look at our [contributing guideline](/docs/CONTRIBUTING.md) to know how you can help us build it.
+
+---
+<img src="https://www.stackbuilders.com/media/images/Sb-supports.original.png" alt="Stack Builders" width="50%"></img>
+[Check out our libraries](https://github.com/stackbuilders/) | [Join our team](https://www.stackbuilders.com/join-us/)
