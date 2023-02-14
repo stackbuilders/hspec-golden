@@ -4,12 +4,26 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5f1c900c7283809d765dd369fbcbc58973ddcefb83d211c7bc9e956bb845d3d0
+-- hash: 459a1a3abf0a8b9d01ef197d76758c1d30f248e38442eaaf033cebebc67dce9a
 
 name:           hspec-golden
 version:        0.2.0.0
 synopsis:       Golden tests for hspec
-description:    Please see the <https://github.com/stackbuilders/hspec-golden#readme README on GitHub>
+description:    .
+                Golden tests store the expected output in a separated file. Each time a golden test
+                is executed the output of the subject under test (SUT) is compared with the
+                expected output. If the output of the SUT changes then the test will fail until
+                the expected output is updated.
+                .
+                @hspec-golden@ allows you to write golden tests using the popular @hspec@.
+                .
+                > describe "myFunc" $
+                >   it "generates the right output with the right params" $
+                >      let output = show $ myFunc params
+                >        in defaultGolden "myFunc" output
+                .
+                Please see the <https://github.com/stackbuilders/hspec-golden#readme README on GitHub>
+                for more information.
 category:       Testing
 homepage:       https://github.com/stackbuilders/hspec-golden#readme
 bug-reports:    https://github.com/stackbuilders/hspec-golden/issues
