@@ -3,8 +3,8 @@ version:             0.2.0.0
 github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
-maintainer:          "cmotoche@stackbuilders.com"
-copyright:           "2019-2020 Stack Builders Inc"
+maintainer:          "Cristhian Motoche <cmotoche@stackbuilders.com>"
+copyright:           "2019-Present Stack Builders Inc"
 synopsis:            "Golden tests for hspec"
 category:            Testing
 
@@ -12,7 +12,7 @@ extra-source-files:
 - README.md
 - ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
+description:         Please see the <https://github.com/stackbuilders/hspec-golden#readme README on GitHub>
 
 dependencies:
 - base >= 4.6 && < 5

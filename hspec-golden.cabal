@@ -1,21 +1,21 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.35.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8d37c1eb62fe010919bb253d6323512db11acbe0524666f813187d3e9e1738b6
+-- hash: 5f1c900c7283809d765dd369fbcbc58973ddcefb83d211c7bc9e956bb845d3d0
 
 name:           hspec-golden
 version:        0.2.0.0
 synopsis:       Golden tests for hspec
-description:    Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
+description:    Please see the <https://github.com/stackbuilders/hspec-golden#readme README on GitHub>
 category:       Testing
 homepage:       https://github.com/stackbuilders/hspec-golden#readme
 bug-reports:    https://github.com/stackbuilders/hspec-golden/issues
 author:         Stack Builders
-maintainer:     cmotoche@stackbuilders.com
-copyright:      2019-2020 Stack Builders Inc
+maintainer:     Cristhian Motoche <cmotoche@stackbuilders.com>
+copyright:      2019-Present Stack Builders Inc
 license:        MIT
 license-file:   LICENSE
 build-type:     Simple
