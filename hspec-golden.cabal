@@ -1,21 +1,35 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.35.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8d37c1eb62fe010919bb253d6323512db11acbe0524666f813187d3e9e1738b6
+-- hash: bcde352005f41eaf1fe5597862d833a68d980c6b6c7c9f26d0a098a334a9e343
 
 name:           hspec-golden
-version:        0.2.0.0
+version:        0.2.0.1
 synopsis:       Golden tests for hspec
-description:    Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
+description:    .
+                Golden tests store the expected output in a separated file. Each time a golden test
+                is executed the output of the subject under test (SUT) is compared with the
+                expected output. If the output of the SUT changes then the test will fail until
+                the expected output is updated.
+                .
+                @hspec-golden@ allows you to write golden tests using the popular @hspec@.
+                .
+                > describe "myFunc" $
+                >   it "generates the right output with the right params" $
+                >      let output = show $ myFunc params
+                >        in defaultGolden "myFunc" output
+                .
+                Please see the <https://github.com/stackbuilders/hspec-golden#readme README on GitHub>
+                for more information.
 category:       Testing
 homepage:       https://github.com/stackbuilders/hspec-golden#readme
 bug-reports:    https://github.com/stackbuilders/hspec-golden/issues
 author:         Stack Builders
-maintainer:     cmotoche@stackbuilders.com
-copyright:      2019-2020 Stack Builders Inc
+maintainer:     Cristhian Motoche <cmotoche@stackbuilders.com>
+copyright:      2019-Present Stack Builders Inc
 license:        MIT
 license-file:   LICENSE
 build-type:     Simple

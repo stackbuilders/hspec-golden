@@ -1,10 +1,10 @@
 name:                hspec-golden
-version:             0.2.0.0
+version:             0.2.0.1
 github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
-maintainer:          "cmotoche@stackbuilders.com"
-copyright:           "2019-2020 Stack Builders Inc"
+maintainer:          "Cristhian Motoche <cmotoche@stackbuilders.com>"
+copyright:           "2019-Present Stack Builders Inc"
 synopsis:            "Golden tests for hspec"
 category:            Testing
 
@@ -12,7 +12,22 @@ extra-source-files:
 - README.md
 - ChangeLog.md
 
-description:         Please see the README on GitHub at <https://github.com/stackbuilders/hspec-golden#README>
+description: |
+  .
+  Golden tests store the expected output in a separated file. Each time a golden test
+  is executed the output of the subject under test (SUT) is compared with the
+  expected output. If the output of the SUT changes then the test will fail until
+  the expected output is updated.
+  .
+  @hspec-golden@ allows you to write golden tests using the popular @hspec@.
+  .
+  > describe "myFunc" $
+  >   it "generates the right output with the right params" $
+  >      let output = show $ myFunc params
+  >        in defaultGolden "myFunc" output
+  .
+  Please see the <https://github.com/stackbuilders/hspec-golden#readme README on GitHub>
+  for more information.
 
 dependencies:
 - base >= 4.6 && < 5
