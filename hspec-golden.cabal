@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 459a1a3abf0a8b9d01ef197d76758c1d30f248e38442eaaf033cebebc67dce9a
+-- hash: bcde352005f41eaf1fe5597862d833a68d980c6b6c7c9f26d0a098a334a9e343
 
 name:           hspec-golden
-version:        0.2.0.0
+version:        0.2.0.1
 synopsis:       Golden tests for hspec
 description:    .
                 Golden tests store the expected output in a separated file. Each time a golden test

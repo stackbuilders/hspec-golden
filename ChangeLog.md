@@ -1,4 +1,8 @@
 # Changelog for hspec-golden
+## 0.2.0.1
+#### Add
+* Update docs.
+
 ## 0.2.0.0
 #### Add
 * More flexible file locations
