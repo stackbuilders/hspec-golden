@@ -65,6 +65,11 @@ spec =
            goldenFileContent <- readFile goldenFilePath
            goldenFileContent `shouldBe` fixtureContent
 
+    context "running on IO" $
+      it "works" $ do
+        void $ runSpec $ fixtureTest fixtureContent
+        result <- readFile goldenFilePath
+        pure $ defaultGolden "foo" result
 
     context "when the output is not updated" $
       context "when the test is executed a second time" $
