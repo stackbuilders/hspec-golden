@@ -66,7 +66,7 @@ spec =
            goldenFileContent `shouldBe` fixtureContent
 
     context "when IO actions are needed in the test case" $
-      it "`defaultGolden` should be accessible from the test case" $ do
+      it "enables `defaultGolden` to be accessible from the test case" $ do
         void $ runSpec $ fixtureTest fixtureContent
         result <- readFile goldenFilePath
         pure $ defaultGolden "io-test" result
