@@ -69,6 +69,19 @@ instance Eq str => Example (Golden str) where
   type Arg (Golden str) = ()
   evaluateExample e = evaluateExample (\() -> e)
 
+instance Eq str => Example (IO (Golden str)) where
+  type Arg (IO (Golden str)) = ()
+  evaluateExample e = evaluateExample (\() -> e)
+
+instance Eq str => Example (arg -> IO (Golden str)) where
+  type Arg (arg -> IO (Golden str)) = arg
+  evaluateExample golden _ action _ = do
+    ref <- newIORef (Result "" Success)
+    action $ \arg -> do
+      r <- runGolden =<< golden arg
+      writeIORef ref (fromGoldenResult r)
+    readIORef ref
+
 instance Eq str => Example (arg -> Golden str) where
   type Arg (arg -> Golden str) = arg
   evaluateExample golden _ action _ = do
