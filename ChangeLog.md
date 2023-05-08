@@ -1,4 +1,8 @@
 # Changelog for hspec-golden
+## 0.2.1.0
+#### Add
+* Instance for IO Golden type. Kudos to @dbalseiro
+
 ## 0.2.0.1
 #### Add
 * Update docs.
