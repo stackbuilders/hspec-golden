@@ -27,6 +27,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "bitc",
+      "name": "Bit Connor",
+      "avatar_url": "https://avatars.githubusercontent.com/u/996487?v=4",
+      "profile": "https://github.com/bitc",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
