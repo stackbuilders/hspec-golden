@@ -127,6 +127,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ChickenProp"><img src="https://avatars.githubusercontent.com/u/57271?v=4?s=100" width="100px;" alt="Phil Hazelden"/><br /><sub><b>Phil Hazelden</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=ChickenProp" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://alexvieth.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/1420272?v=4?s=100" width="100px;" alt="Alexander Vieth"/><br /><sub><b>Alexander Vieth</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=avieth" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/guibou"><img src="https://avatars.githubusercontent.com/u/9705357?v=4?s=100" width="100px;" alt="Guillaume Bouchard"/><br /><sub><b>Guillaume Bouchard</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=guibou" title="Code">💻</a></td>
+    </tr>
   </tbody>
   <tfoot>
     <tr>
