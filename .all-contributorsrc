@@ -18,6 +18,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "christianwish",
+      "name": "Christian Wünsche (ehem Heyn)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3807237?v=4",
+      "profile": "https://www.christian-wuensche.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

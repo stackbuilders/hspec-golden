@@ -120,6 +120,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://cristhianmotoche.github.io/"><img src="https://avatars.githubusercontent.com/u/8370088?v=4?s=100" width="100px;" alt="Cristhian Motoche"/><br /><sub><b>Cristhian Motoche</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=CristhianMotoche" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.christian-wuensche.com/"><img src="https://avatars.githubusercontent.com/u/3807237?v=4?s=100" width="100px;" alt="Christian Wünsche (ehem Heyn)"/><br /><sub><b>Christian Wünsche (ehem Heyn)</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=christianwish" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
