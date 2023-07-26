@@ -63,6 +63,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "avieth",
+      "name": "Alexander Vieth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1420272?v=4",
+      "profile": "http://alexvieth.wordpress.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
