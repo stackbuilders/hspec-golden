@@ -97,6 +97,47 @@ Update the golden tests under `.myGoldenTest` directory:
 $ hgold -u .myGoldenTest
 ```
 
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://cristhianmotoche.github.io/"><img src="https://avatars.githubusercontent.com/u/8370088?v=4?s=100" width="100px;" alt="Cristhian Motoche"/><br /><sub><b>Cristhian Motoche</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=CristhianMotoche" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.christian-wuensche.com/"><img src="https://avatars.githubusercontent.com/u/3807237?v=4?s=100" width="100px;" alt="Christian Wünsche (ehem Heyn)"/><br /><sub><b>Christian Wünsche (ehem Heyn)</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=christianwish" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bitc"><img src="https://avatars.githubusercontent.com/u/996487?v=4?s=100" width="100px;" alt="Bit Connor"/><br /><sub><b>Bit Connor</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=bitc" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://dbalseiro.github.io/"><img src="https://avatars.githubusercontent.com/u/2053849?v=4?s=100" width="100px;" alt="Diego Balseiro"/><br /><sub><b>Diego Balseiro</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=dbalseiro" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Jagl257"><img src="https://avatars.githubusercontent.com/u/27145248?v=4?s=100" width="100px;" alt="Jorge Guerra Landázuri"/><br /><sub><b>Jorge Guerra Landázuri</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=Jagl257" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ChickenProp"><img src="https://avatars.githubusercontent.com/u/57271?v=4?s=100" width="100px;" alt="Phil Hazelden"/><br /><sub><b>Phil Hazelden</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=ChickenProp" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://alexvieth.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/1420272?v=4?s=100" width="100px;" alt="Alexander Vieth"/><br /><sub><b>Alexander Vieth</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=avieth" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/guibou"><img src="https://avatars.githubusercontent.com/u/9705357?v=4?s=100" width="100px;" alt="Guillaume Bouchard"/><br /><sub><b>Guillaume Bouchard</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=guibou" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/fefi95"><img src="https://avatars.githubusercontent.com/u/12057338?v=4?s=100" width="100px;" alt="Stefani Castellanos"/><br /><sub><b>Stefani Castellanos</b></sub></a><br /><a href="https://github.com/stackbuilders/hspec-golden/commits?author=fefi95" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="center" size="13px" colspan="7">
+        <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
+          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
+        </img>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
 ## License
 
 MIT, see the [LICENSE file](./LICENSE).

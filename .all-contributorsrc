@@ -1,0 +1,97 @@
+{
+  "projectName": "hspec-golden",
+  "projectOwner": "stackbuilders",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "CristhianMotoche",
+      "name": "Cristhian Motoche",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8370088?v=4",
+      "profile": "https://cristhianmotoche.github.io/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "christianwish",
+      "name": "Christian Wünsche (ehem Heyn)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3807237?v=4",
+      "profile": "https://www.christian-wuensche.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bitc",
+      "name": "Bit Connor",
+      "avatar_url": "https://avatars.githubusercontent.com/u/996487?v=4",
+      "profile": "https://github.com/bitc",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dbalseiro",
+      "name": "Diego Balseiro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2053849?v=4",
+      "profile": "https://dbalseiro.github.io/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Jagl257",
+      "name": "Jorge Guerra Landázuri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27145248?v=4",
+      "profile": "https://github.com/Jagl257",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ChickenProp",
+      "name": "Phil Hazelden",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57271?v=4",
+      "profile": "https://github.com/ChickenProp",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "avieth",
+      "name": "Alexander Vieth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1420272?v=4",
+      "profile": "http://alexvieth.wordpress.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "guibou",
+      "name": "Guillaume Bouchard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9705357?v=4",
+      "profile": "https://github.com/guibou",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "fefi95",
+      "name": "Stefani Castellanos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12057338?v=4",
+      "profile": "https://github.com/fefi95",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "linkToUsage": true
+}
