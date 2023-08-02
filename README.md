@@ -1,5 +1,5 @@
 # hspec-golden
-[![Build Status](https://travis-ci.org/stackbuilders/hspec-golden.svg?branch=master)](https://travis-ci.org/stackbuilders/hspec-golden)
+[![Build and Test](https://github.com/stackbuilders/hspec-golden/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/stackbuilders/hspec-golden/actions/workflows/build-and-test.yml) [![Hackage](https://img.shields.io/hackage/v/dotenv.svg)](http://hackage.haskell.org/package/dotenv)
 
 ## Description
 Golden tests store the expected output in a separated file. Each time a golden test
