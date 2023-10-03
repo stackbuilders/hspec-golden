@@ -21,14 +21,17 @@ type @String@. If your SUT has a different output, you can use 'Golden'.
 module Test.Hspec.Golden
   ( Golden(..)
   , defaultGolden
+  , golden
   )
   where
 
 import           Data.IORef
+import           Data.List            (intercalate)
 import           System.Directory     (createDirectoryIfMissing, doesFileExist)
 import           System.FilePath      (takeDirectory, (</>))
 import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
-                                       Result (..), ResultStatus (..))
+                                       Result (..), ResultStatus (..),
+                                       Spec (..), it)
 
 
 -- | Golden tests parameters
@@ -99,7 +102,7 @@ fromGoldenResult FirstExecutionSucceed  = Result "First time execution. Golden f
 fromGoldenResult FirstExecutionFail =
   Result "First time execution. Golden file created."
          (Failure Nothing (Reason "Golden file did not exist and was created. Failed because failFirstTime is set to True"))
-fromGoldenResult (MissmatchOutput expected actual) =
+fromGoldenResult (MismatchOutput expected actual) =
   Result "Files golden and actual not match"
          (Failure Nothing (ExpectedButGot Nothing expected actual))
 
@@ -127,7 +130,7 @@ defaultGolden name output_ =
 -- | Possible results from a golden test execution
 
 data GoldenResult =
-   MissmatchOutput String String
+   MismatchOutput String String
    | SameOutput
    | FirstExecutionSucceed
    | FirstExecutionFail
@@ -161,4 +164,12 @@ runGolden Golden{..} =
 
           if contentGolden == output
              then return SameOutput
-             else return $ MissmatchOutput (encodePretty contentGolden) (encodePretty output)
+             else return $ MismatchOutput (encodePretty contentGolden) (encodePretty output)
+
+
+-- | A helper function to create a golden test.
+golden :: String -> IO String -> Spec
+golden description action = do
+  path <- (++ [description]) <$> getSpecDescriptionPath
+  it description $ do
+    action >>= defaultGolden (intercalate '-' path)
