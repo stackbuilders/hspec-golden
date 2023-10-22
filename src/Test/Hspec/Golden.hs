@@ -25,13 +25,15 @@ module Test.Hspec.Golden
   )
   where
 
+import           Control.Monad.IO.Class (MonadIO (liftIO))
 import           Data.IORef
-import           Data.List            (intercalate)
-import           System.Directory     (createDirectoryIfMissing, doesFileExist)
-import           System.FilePath      (takeDirectory, (</>))
-import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
-                                       Result (..), ResultStatus (..),
-                                       Spec (..), it)
+import           Data.List              (intercalate)
+import           System.Directory       (createDirectoryIfMissing,
+                                         doesFileExist)
+import           System.FilePath        (takeDirectory, (</>))
+import           Test.Hspec.Core.Spec   (Example (..), FailureReason (..),
+                                         Result (..), ResultStatus (..), Spec,
+                                         SpecWith, getSpecDescriptionPath, it)
 
 
 -- | Golden tests parameters
@@ -168,8 +170,9 @@ runGolden Golden{..} =
 
 
 -- | A helper function to create a golden test.
+
 golden :: String -> IO String -> Spec
 golden description action = do
   path <- (++ [description]) <$> getSpecDescriptionPath
   it description $ do
-    action >>= defaultGolden (intercalate '-' path)
+    defaultGolden (intercalate "-" path) <$> action
