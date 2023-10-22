@@ -24,8 +24,8 @@ actualFilePath = goldenTestDir ++ "/" ++ "actual"
 
 fixtureTest :: String -> H.Spec
 fixtureTest content =
-  H.describe "id" $
-    H.it "should work" $
+  describe "id" $
+    it "should work" $
       defaultGolden fixtureTestName content
 
 removeFixtures :: IO ()
@@ -59,7 +59,7 @@ spec =
            actualFileContent <- readFile actualFilePath
            actualFileContent `shouldBe` fixtureUpdatedContent
 
-        it "shouldn't overide the `golden` file" $ do
+        it "shouldn't override the `golden` file" $ do
            void $ runSpec $ fixtureTest fixtureContent
            void $ runSpec $ fixtureTest fixtureUpdatedContent
            goldenFileContent <- readFile goldenFilePath
