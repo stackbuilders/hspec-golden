@@ -1,4 +1,8 @@
 # Changelog for hspec-golden
+## 0.2.1.1
+#### Add
+* Add colors to hspec-golden CLI tool.
+
 ## 0.2.1.0
 #### Add
 * Instance for IO Golden type. Kudos to @dbalseiro
