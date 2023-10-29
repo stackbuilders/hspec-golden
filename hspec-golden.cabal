@@ -1,11 +1,11 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.2.
+-- This file has been generated from package.yaml by hpack version 0.35.5.
 --
 -- see: https://github.com/sol/hpack
 
 name:           hspec-golden
-version:        0.2.1.0
+version:        0.2.1.
 synopsis:       Golden tests for hspec
 description:    .
                 Golden tests store the expected output in a separated file. Each time a golden test
@@ -61,7 +61,8 @@ executable hgold
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.6 && <5
+      ansi-terminal >=1.0 && <2.0
+    , base >=4.6 && <5
     , directory >=1.2.5.0
     , hspec-golden
     , optparse-applicative

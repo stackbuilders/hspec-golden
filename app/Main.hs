@@ -1,5 +1,6 @@
 module Main where
 
+import           System.Console.ANSI
 import           Control.Monad         (forM_, when)
 import           Data.Version          (showVersion)
 import           Paths_hspec_golden    (version)
@@ -14,14 +15,10 @@ defaultDirGoldenTest = ".golden"
 
 -- CLI Params
 
-data Params =
-    Params
-      { updateDir    :: FilePath 
-   --   , shouldUpdate :: Bool
-      } deriving Show
-  
+newtype Params = Params { updateDir :: FilePath } deriving Show
+
 params :: Parser Params
-params = Params 
+params = Params
       <$> strOption
           (long "update"
           <> short 'u'
@@ -31,18 +28,29 @@ params = Params
           <> help "The testing directory where you're dumping your results.")
 
 versionOpt :: Parser (a->a)
-versionOpt = infoOption (showVersion version) 
+versionOpt = infoOption (showVersion version)
               (long "version"
-              <> short 'v'  
+              <> short 'v'
               <> help "Show version")
-            
 
---Update Files
+putStrColor :: Color -> String -> IO ()
+putStrColor color str = do
+  setSGR [SetColor Foreground Dull color]
+  putStr str
+  setSGR [Reset]
+
+putStrLnColor :: Color -> String -> IO ()
+putStrLnColor color str = do
+  setSGR [SetColor Foreground Dull color]
+  putStrLn str
+  setSGR [Reset]
+
+-- Update Files
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
-  putStrLn "Replacing golden with actual..."
+  putStrLnColor Yellow "Replacing golden with actual:"
   go dir
-  putStrLn "Finish..."
+  putStrLnColor Green "Finished!"
  where
   go dir = do
     entries <- listDirectory dir
@@ -60,7 +68,11 @@ mvActualToGolden testPath =
    in do
      actualFileExist <- doesFileExist actualFilePath
      when actualFileExist (do
-       putStrLn $ "  Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
+       putStr "  Replacing file: "
+       putStrColor Yellow goldenFilePath
+       putStr " with: "
+       putStrColor Green actualFilePath
+       putStrLn ""
        renameFile actualFilePath goldenFilePath)
 
 

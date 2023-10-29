@@ -1,5 +1,5 @@
 name:                hspec-golden
-version:             0.2.1.0
+version:             0.2.1.
 github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
@@ -53,6 +53,7 @@ executables:
     - hspec-golden
     - directory >= 1.2.5.0
     - optparse-applicative
+    - ansi-terminal >= 1.0 && < 2.0
 
 tests:
   hspec-golden-test:
