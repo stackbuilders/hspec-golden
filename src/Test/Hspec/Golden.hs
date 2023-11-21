@@ -22,6 +22,7 @@ module Test.Hspec.Golden
   ( Golden(..)
   , defaultGolden
   , golden
+  , goldenIO
   )
   where
 
@@ -171,8 +172,22 @@ runGolden Golden{..} =
 
 -- | A helper function to create a golden test.
 
-golden :: String -> IO String -> Spec
+golden :: String -> Golden String -> Spec
 golden description action = do
   path <- (++ [description]) <$> getSpecDescriptionPath
   it description $ do
-    defaultGolden (intercalate "-" path) <$> action
+    let name = intercalate "-" path
+    action {    goldenFile = ".golden" </> name </> "golden",
+                actualFile = Just (".golden" </> name </> "actual")}
+
+defaultGoldenWrapper :: String -> Golden String
+defaultGoldenWrapper = defaultGolden ""
+
+goldenIO :: String -> IO (Golden String) -> Spec
+goldenIO description runAction = do
+  path <- (++ [description]) <$> getSpecDescriptionPath
+  it description $ do
+    let name = intercalate "-" path
+    action <- runAction
+    return $ action {    goldenFile = ".golden" </> name </> "golden",
+            actualFile = Just (".golden" </> name </> "actual")}
