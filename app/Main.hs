@@ -6,6 +6,7 @@ import           Data.Version          (showVersion)
 import           Paths_hspec_golden    (version)
 import           Options.Applicative
 import           Data.Monoid ((<>))
+import           GHC.IO (catch)
 import           System.Directory      (doesDirectoryExist, doesFileExist,
                                         listDirectory, renameFile)
 import qualified Test.Hspec.Golden     as G
@@ -33,24 +34,23 @@ versionOpt = infoOption (showVersion version)
               <> short 'v'
               <> help "Show version")
 
-putStrColor :: Color -> String -> IO ()
-putStrColor color str = do
+withColor :: Color -> IO () -> IO ()
+withColor color action = do
   setSGR [SetColor Foreground Dull color]
-  putStr str
+  action
   setSGR [Reset]
 
-putStrLnColor :: Color -> String -> IO ()
-putStrLnColor color str = do
-  setSGR [SetColor Foreground Dull color]
-  putStrLn str
-  setSGR [Reset]
+success, warning, failure :: IO () -> IO ()
+success = withColor Green
+warning = withColor Yellow
+failure = withColor Red
 
--- Update Files
+-- Update golden files in the given directory
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
-  putStrLnColor Yellow "Replacing golden with actual:"
+  putStrLn "Replacing golden with actual:"
   go dir
-  putStrLnColor Green "Finished!"
+  success $ putStrLn "Finished!"
  where
   go dir = do
     entries <- listDirectory dir
@@ -67,13 +67,16 @@ mvActualToGolden testPath =
       goldenFilePath = testPath ++ "/golden"
    in do
      actualFileExist <- doesFileExist actualFilePath
-     when actualFileExist (do
+     when actualFileExist $ do
        putStr "  Replacing file: "
-       putStrColor Yellow goldenFilePath
+       warning $ putStr goldenFilePath
        putStr " with: "
-       putStrColor Green actualFilePath
-       putStrLn ""
-       renameFile actualFilePath goldenFilePath)
+       success $ putStrLn actualFilePath
+       renameFile actualFilePath goldenFilePath `catch` handleErr
+        where
+          handleErr :: IOError -> IO ()
+          handleErr e =
+            failure $ putStr $ "Warning: Could not replace file due to error: " ++ show e
 
 
 -- Main
