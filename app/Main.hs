@@ -1,10 +1,12 @@
 module Main where
 
+import           System.Console.ANSI
 import           Control.Monad         (forM_, when)
 import           Data.Version          (showVersion)
 import           Paths_hspec_golden    (version)
 import           Options.Applicative
 import           Data.Monoid ((<>))
+import           GHC.IO (catch)
 import           System.Directory      (doesDirectoryExist, doesFileExist,
                                         listDirectory, renameFile)
 import qualified Test.Hspec.Golden     as G
@@ -14,14 +16,10 @@ defaultDirGoldenTest = ".golden"
 
 -- CLI Params
 
-data Params =
-    Params
-      { updateDir    :: FilePath 
-   --   , shouldUpdate :: Bool
-      } deriving Show
-  
+newtype Params = Params { updateDir :: FilePath } deriving Show
+
 params :: Parser Params
-params = Params 
+params = Params
       <$> strOption
           (long "update"
           <> short 'u'
@@ -31,18 +29,28 @@ params = Params
           <> help "The testing directory where you're dumping your results.")
 
 versionOpt :: Parser (a->a)
-versionOpt = infoOption (showVersion version) 
+versionOpt = infoOption (showVersion version)
               (long "version"
-              <> short 'v'  
+              <> short 'v'
               <> help "Show version")
-            
 
---Update Files
+withColor :: Color -> IO () -> IO ()
+withColor color action = do
+  setSGR [SetColor Foreground Dull color]
+  action
+  setSGR [Reset]
+
+success, warning, failure :: IO () -> IO ()
+success = withColor Green
+warning = withColor Yellow
+failure = withColor Red
+
+-- Update golden files in the given directory
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
-  putStrLn "Replacing golden with actual..."
+  putStrLn "Replacing golden with actual:"
   go dir
-  putStrLn "Finish..."
+  success $ putStrLn "Finished!"
  where
   go dir = do
     entries <- listDirectory dir
@@ -59,9 +67,16 @@ mvActualToGolden testPath =
       goldenFilePath = testPath ++ "/golden"
    in do
      actualFileExist <- doesFileExist actualFilePath
-     when actualFileExist (do
-       putStrLn $ "  Replacing file: " ++ goldenFilePath ++ " with: " ++ actualFilePath
-       renameFile actualFilePath goldenFilePath)
+     when actualFileExist $ do
+       putStr "  Replacing file: "
+       warning $ putStr goldenFilePath
+       putStr " with: "
+       success $ putStrLn actualFilePath
+       renameFile actualFilePath goldenFilePath `catch` handleErr
+        where
+          handleErr :: IOError -> IO ()
+          handleErr e =
+            failure $ putStr $ "Warning: Could not replace file due to error: " ++ show e
 
 
 -- Main
