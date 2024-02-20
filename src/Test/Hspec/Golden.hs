@@ -184,4 +184,4 @@ golden
 golden description runAction = do
   path <- (++ words description) <$> getSpecDescriptionPath
   it description $
-    defaultGolden (traceShowId $ intercalate "-" path) <$> runAction
+    defaultGolden (intercalate "-" path) <$> runAction
