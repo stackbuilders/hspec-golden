@@ -25,6 +25,15 @@ The first parameter of `defaultGolden` is the golden file name. I recommend you 
 always have a unique name for your file. Example: `show 'myFunc == MyModule.myFunc`.
 Although, you can name it as you like.
 
+You can write golden tests using `golden` helper:
+
+```haskell
+describe "myFunc" $
+  golden "generates the right output with the right params" $
+     let output = show $ myFunc params
+       in return output
+```
+
 In case your output isn't a `String` you can define your own `Golden` test
 using the `Golden` data type:
 
@@ -48,10 +57,12 @@ myGoldenTest name actualOutput =
     failFirstTime = False
   }
 
-describe "myTextFunc" $
-  it "generates the right output with the right params" $
-     let textOutput = myTextFunc params
-       in myGoldenTest (show 'myTextFunc) textOutput
+spec :: Spec
+spec =
+  describe "myTextFunc" $
+    it "generates the right output with the right params" $
+       let textOutput = myTextFunc params
+         in myGoldenTest (show 'myTextFunc) textOutput
 ```
 
 ## Install CLI
