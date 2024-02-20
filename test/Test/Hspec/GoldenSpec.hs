@@ -1,6 +1,6 @@
 module Test.Hspec.GoldenSpec (spec) where
 
-import           Control.Monad          (void)
+import           Control.Monad          (void, when)
 
 import           Test.Hspec
 import qualified Test.Hspec.Core.Runner as H
@@ -28,8 +28,16 @@ fixtureTest content =
     it "should work" $
       defaultGolden fixtureTestName content
 
+fixtureGoldenTest :: String -> H.Spec
+fixtureGoldenTest content =
+  describe "id" $
+    golden "golden sample file" $
+      return content
+
 removeFixtures :: IO ()
-removeFixtures = removeDirectoryRecursive goldenTestDir
+removeFixtures = do
+  exists <- doesDirectoryExist ".golden"
+  when exists $ removeDirectoryRecursive ".golden"
 
 runSpec :: H.Spec -> IO [String]
 runSpec = captureLines . H.hspecResult
@@ -78,3 +86,10 @@ spec =
            void $ runSpec $ fixtureTest fixtureContent
            goldenFileContent <- readFile goldenFilePath
            goldenFileContent `shouldBe` fixtureContent
+
+    describe "golden" $
+      context "given some input" $
+        it "creates file with separated dashes" $ do
+          void $ runSpec $ fixtureGoldenTest fixtureContent
+          goldenFile <- readFile ".golden/id-golden-sample-file/golden"
+          goldenFile `shouldBe` fixtureContent
