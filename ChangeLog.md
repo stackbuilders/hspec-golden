@@ -1,4 +1,8 @@
 # Changelog for hspec-golden
+## 0.2.2.0
+#### Add
+* `golden` helper to write tests
+
 ## 0.2.1.1
 #### Add
 * Add colors to hspec-golden CLI tool.

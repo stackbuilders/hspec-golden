@@ -21,14 +21,19 @@ type @String@. If your SUT has a different output, you can use 'Golden'.
 module Test.Hspec.Golden
   ( Golden(..)
   , defaultGolden
+  , golden
   )
   where
 
+import           Control.Monad.IO.Class (MonadIO (liftIO))
 import           Data.IORef
-import           System.Directory     (createDirectoryIfMissing, doesFileExist)
-import           System.FilePath      (takeDirectory, (</>))
-import           Test.Hspec.Core.Spec (Example (..), FailureReason (..),
-                                       Result (..), ResultStatus (..))
+import           Data.List              (intercalate)
+import           System.Directory       (createDirectoryIfMissing,
+                                         doesFileExist)
+import           System.FilePath        (takeDirectory, (</>))
+import           Test.Hspec.Core.Spec   (Example (..), FailureReason (..),
+                                         Result (..), ResultStatus (..), Spec,
+                                         SpecWith, getSpecDescriptionPath, it)
 
 
 -- | Golden tests parameters
@@ -99,7 +104,7 @@ fromGoldenResult FirstExecutionSucceed  = Result "First time execution. Golden f
 fromGoldenResult FirstExecutionFail =
   Result "First time execution. Golden file created."
          (Failure Nothing (Reason "Golden file did not exist and was created. Failed because failFirstTime is set to True"))
-fromGoldenResult (MissmatchOutput expected actual) =
+fromGoldenResult (MismatchOutput expected actual) =
   Result "Files golden and actual not match"
          (Failure Nothing (ExpectedButGot Nothing expected actual))
 
@@ -127,7 +132,7 @@ defaultGolden name output_ =
 -- | Possible results from a golden test execution
 
 data GoldenResult =
-   MissmatchOutput String String
+   MismatchOutput String String
    | SameOutput
    | FirstExecutionSucceed
    | FirstExecutionFail
@@ -161,4 +166,22 @@ runGolden Golden{..} =
 
           if contentGolden == output
              then return SameOutput
-             else return $ MissmatchOutput (encodePretty contentGolden) (encodePretty output)
+             else return $ MismatchOutput (encodePretty contentGolden) (encodePretty output)
+
+
+-- | A helper function to create a golden test.
+--
+-- @
+--  describe "function" $
+--    golden "some name" $
+--      return content
+-- @
+
+golden
+  :: String     -- ^ Test description
+  -> IO String  -- ^ Content (@return content@ for pure functions)
+  -> Spec
+golden description runAction = do
+  path <- (++ words description) <$> getSpecDescriptionPath
+  it description $
+    defaultGolden (intercalate "-" path) <$> runAction
