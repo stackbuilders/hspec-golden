@@ -7,7 +7,7 @@ maintainer:          "Cristhian Motoche <cmotoche@stackbuilders.com>"
 copyright:           "2019-Present Stack Builders Inc"
 synopsis:            "Golden tests for hspec"
 category:            Testing
-tested-with:         GHC==8.8, GHC=8.10, GHC==9.0
+tested-with:         GHC==8.8, GHC==8.10, GHC==9.0
 
 extra-source-files:
 - README.md
