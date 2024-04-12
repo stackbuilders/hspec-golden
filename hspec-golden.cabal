@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.5.
+-- This file has been generated from package.yaml by hpack version 0.36.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -48,7 +48,7 @@ library
       src
   build-depends:
       base >=4.6 && <5
-    , directory
+    , directory >=1.3.6 && <1.4
     , filepath >=1.0 && <2.0
     , hspec-core >=2.10 && <3.0
   default-language: Haskell2010
@@ -65,7 +65,7 @@ executable hgold
     , base >=4.6 && <5
     , directory >=1.2.5.0
     , hspec-golden
-    , optparse-applicative
+    , optparse-applicative >=0.18.1 && <0.19
   default-language: Haskell2010
 
 test-suite hspec-golden-test

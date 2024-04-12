@@ -37,7 +37,7 @@ library:
   exposed-modules:
     - Test.Hspec.Golden
   dependencies:
-  - directory
+  - directory >= 1.3.6 && < 1.4
   - filepath >=1.0 && <2.0
   - hspec-core >= 2.10 && < 3.0
 
@@ -52,7 +52,7 @@ executables:
     dependencies:
     - hspec-golden
     - directory >= 1.2.5.0
-    - optparse-applicative
+    - optparse-applicative >= 0.18.1 && < 0.19
     - ansi-terminal >= 1.0 && < 2.0
 
 tests:
