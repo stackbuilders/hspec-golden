@@ -1,15 +1,15 @@
 module Main where
 
-import           System.Console.ANSI
-import           Control.Monad         (forM_, when)
-import           Data.Version          (showVersion)
-import           Paths_hspec_golden    (version)
+import           Control.Monad       (forM_, when)
+import           Data.Monoid         ((<>))
+import           Data.Version        (showVersion)
+import           GHC.IO              (catch)
 import           Options.Applicative
-import           Data.Monoid ((<>))
-import           GHC.IO (catch)
-import           System.Directory      (doesDirectoryExist, doesFileExist,
-                                        listDirectory, renameFile)
-import qualified Test.Hspec.Golden     as G
+import           Paths_hspec_golden  (version)
+import           System.Console.ANSI
+import           System.Directory    (doesDirectoryExist, doesFileExist,
+                                      listDirectory, renameFile)
+import qualified Test.Hspec.Golden   as G
 
 defaultDirGoldenTest :: FilePath
 defaultDirGoldenTest = ".golden"
@@ -48,6 +48,7 @@ failure = withColor Red
 -- Update golden files in the given directory
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
+  putStrLn "TESTING!!! x5"
   putStrLn "Replacing golden with actual:"
   go dir
   success $ putStrLn "Finished!"

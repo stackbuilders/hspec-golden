@@ -1,5 +1,5 @@
 name:                hspec-golden
-version:             0.2.2.0
+version:             0.0.0.0 # We use semantic-release to version this package
 github:              "stackbuilders/hspec-golden"
 license:             MIT
 author:              "Stack Builders"
