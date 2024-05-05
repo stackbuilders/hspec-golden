@@ -1,3 +1,17 @@
 {
-  "branches": ["master"]
+  "$schema": "https://json.schemastore.org/semantic-release",
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "semantic-release-hackage",
+      {
+        "packageName": "atomic-write",
+        "versionPrefix": "0."
+      }
+    ],
+    "@semantic-release/github"
+  ],
+  "tagFormat": "v0.${version}"
 }
