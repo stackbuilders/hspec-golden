@@ -7,7 +7,7 @@
     [
       "semantic-release-hackage",
       {
-        "packageName": "atomic-write",
+        "packageName": "hspec-golden",
         "versionPrefix": "0."
       }
     ],
