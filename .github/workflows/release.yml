@@ -14,6 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       # Workaround for issue: https://github.com/cycjimmy/semantic-release-action/issues/159
+      # Had to pin to version 14
       - name: "Pin node version"
         uses: actions/setup-node@v2
         with:
