@@ -48,7 +48,6 @@ failure = withColor Red
 -- Update golden files in the given directory
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
-  putStrLn "TESTING!!! x5"
   putStrLn "Replacing golden with actual:"
   go dir
   success $ putStrLn "Finished!"
