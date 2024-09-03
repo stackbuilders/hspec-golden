@@ -8,7 +8,8 @@
       "semantic-release-hackage",
       {
         "packageName": "hspec-golden",
-        "versionPrefix": "0."
+        "versionPrefix": "0.",
+        "publishDocumentation": true
       }
     ],
     "@semantic-release/github"
