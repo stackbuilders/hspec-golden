@@ -9,7 +9,7 @@
       {
         "packageName": "hspec-golden",
         "versionPrefix": "0.",
-        "publishDocumentation": true
+        "publishDocumentation": false
       }
     ],
     "@semantic-release/github"
