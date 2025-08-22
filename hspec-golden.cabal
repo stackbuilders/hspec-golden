@@ -67,7 +67,7 @@ executable hgold
     , base >=4.6 && <5
     , directory >=1.2.5.0
     , hspec-golden
-    , optparse-applicative >=0.18.1 && <0.19
+    , optparse-applicative >=0.18.1 && <0.20
   default-language: Haskell2010
 
 test-suite hspec-golden-test
