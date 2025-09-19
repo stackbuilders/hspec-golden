@@ -71,5 +71,6 @@ tests:
     - hspec
     - hspec-golden
     - hspec-core
+    - filepath
     build-tools:
       - hspec-discover:hspec-discover >= 2.0  && < 3.0

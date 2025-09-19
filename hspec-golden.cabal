@@ -85,6 +85,7 @@ test-suite hspec-golden-test
   build-depends:
       base >=4.6 && <5
     , directory
+    , filepath
     , hspec
     , hspec-core
     , hspec-golden
