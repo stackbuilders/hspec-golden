@@ -18,12 +18,13 @@ data Country = Country
 instance ToJSON Country
 
 
-ecuador = Country "Ecuador" "America" 1
+ecuador = Country "Ecuador" "South America" 1
 germany = Country "Germany" "Europe" 2
 japan = Country "Japan" "Asia" 4
+unitedStates = Country "United States" "North America" 3
 
 countries :: [Country]
-countries = [ecuador,germany,japan]
+countries = [ecuador,germany,japan, unitedStates]
 
 encodeCountries :: [Country] -> ByteString
 encodeCountries = encode
