@@ -10,6 +10,8 @@ import           System.Console.ANSI
 import           System.Directory    (doesDirectoryExist, doesFileExist,
                                       listDirectory, renameFile)
 import qualified Test.Hspec.Golden   as G
+import System.FilePath((</>))
+import Data.List (groupBy, isInfixOf)
 
 defaultDirGoldenTest :: FilePath
 defaultDirGoldenTest = ".golden"
@@ -49,35 +51,43 @@ failure = withColor Red
 updateGolden :: FilePath -> IO ()
 updateGolden dir = do
   putStrLn "Replacing golden with actual:"
-  go dir
+  udpateFilesInDir dir
   success $ putStrLn "Finished!"
  where
-  go dir = do
+  getBaseFileName filename = takeWhile (/= '-') filename 
+  udpateFilesInDir dir = do
     entries <- listDirectory dir
-    forM_ entries $ \entry -> do
-      let entryInDir = dir ++ "/" ++ entry
-      isDir <- doesDirectoryExist entryInDir
-      when isDir $ do
-        mvActualToGolden entryInDir
-        go entryInDir
 
-mvActualToGolden :: FilePath -> IO ()
-mvActualToGolden testPath =
-  let actualFilePath = testPath ++ "/actual"
-      goldenFilePath = testPath ++ "/golden"
-   in do
-     actualFileExist <- doesFileExist actualFilePath
-     when actualFileExist $ do
-       putStr "  Replacing file: "
-       warning $ putStr goldenFilePath
-       putStr " with: "
-       success $ putStrLn actualFilePath
-       renameFile actualFilePath goldenFilePath `catch` handleErr
-        where
-          handleErr :: IOError -> IO ()
-          handleErr e =
-            failure $ putStr $ "Warning: Could not replace file due to error: " ++ show e
+    let groupedEntries = 
+          [ (file1, file2)
+            | [file1, file2] <- 
+                groupBy 
+                  (\file1 file2 -> 
+                    getBaseFileName file1 == getBaseFileName file2
+                  ) entries,
+                  "-actual" `isInfixOf` file1,
+                  "-golden" `isInfixOf` file2
+          ]
 
+    dirExists <- doesDirectoryExist dir
+    if not dirExists
+    then warning $ putStrLn (dir <> " does not exist")
+    else forM_ groupedEntries $ \(actual, golden) ->
+      mvActualToGolden (dir </> actual) (dir </> golden)
+
+mvActualToGolden :: FilePath -> FilePath -> IO ()
+mvActualToGolden actualFilePath goldenFilePath = do
+  actualFileExist <- doesFileExist actualFilePath
+  when actualFileExist $ do
+    putStr "  Replacing file: "
+    warning $ putStr goldenFilePath
+    putStr " with: "
+    success $ putStrLn actualFilePath
+    renameFile actualFilePath goldenFilePath `catch` handleErr
+     where
+       handleErr :: IOError -> IO ()
+       handleErr e =
+         failure $ putStr $ "Warning: Could not replace file due to error: " ++ show e
 
 -- Main
 
