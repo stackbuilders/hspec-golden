@@ -119,14 +119,14 @@ fromGoldenResult (MismatchOutput expected actual) =
 -- @
 
 defaultGolden :: String -> String -> Golden String
-defaultGolden name output_ =
+defaultGolden filename output =
   Golden {
-    output = output_,
+    filename,
+    output,
+    outputDir = ".golden",
     encodePretty = show,
     writeToFile = writeFile,
     readFromFile = readFile,
-    goldenFile = ".golden" </> name </> "golden",
-    actualFile = Just (".golden" </> name </> "actual"),
     failFirstTime = False
   }
 
