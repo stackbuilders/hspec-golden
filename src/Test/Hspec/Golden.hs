@@ -141,34 +141,30 @@ data GoldenResult =
 -- | Runs a Golden test.
 
 runGolden :: Eq str => Golden str -> IO GoldenResult
-runGolden Golden{..} =
-  let goldenTestDir = takeDirectory goldenFile
-   in do
-     createDirectoryIfMissing True goldenTestDir
-     goldenFileExist <- doesFileExist goldenFile
+runGolden Golden{..} = do
+  let goldenTestDir = outputDir
 
-     case actualFile of
-       Nothing -> return ()
-       Just actual -> do
-           -- It is recommended to always write the actual file, this way,
-           -- hgold will always upgrade based on the latest run
-           let actualDir = takeDirectory actual
-           createDirectoryIfMissing True actualDir
-           writeToFile actual output
+  let goldenFile = filename <> "-golden"
+  let actualFile = filename <> "-actual"
 
-     if not goldenFileExist
-       then do
-           writeToFile goldenFile output
-           return $ if failFirstTime
-               then FirstExecutionFail
-               else FirstExecutionSucceed
-       else do
-          contentGolden <- readFromFile goldenFile
+  createDirectoryIfMissing True goldenTestDir
 
-          if contentGolden == output
-             then return SameOutput
-             else return $ MismatchOutput (encodePretty contentGolden) (encodePretty output)
+  writeToFile (goldenTestDir </> actualFile) output
 
+  goldenFileExist <- doesFileExist (goldenTestDir </> goldenFile)
+
+  if not goldenFileExist
+    then do
+        writeToFile (goldenTestDir </> goldenFile) output
+        return $ if failFirstTime
+            then FirstExecutionFail
+            else FirstExecutionSucceed
+    else do
+       contentGolden <- readFromFile (goldenTestDir </> goldenFile)
+
+       if contentGolden == output
+          then return SameOutput
+          else return $ MismatchOutput (encodePretty contentGolden) (encodePretty output)
 
 -- | A helper function to create a golden test.
 --
