@@ -17,6 +17,7 @@ type @String@. If your SUT has a different output, you can use 'Golden'.
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE RecordWildCards   #-}
 {-# LANGUAGE TypeFamilies      #-}
+{-# LANGUAGE NamedFieldPuns    #-}
 
 module Test.Hspec.Golden
   ( Golden(..)
@@ -61,12 +62,12 @@ import           Test.Hspec.Core.Spec   (Example (..), FailureReason (..),
 
 data Golden str =
   Golden {
-    output        :: str, -- ^ Output
+    outputDir     :: FilePath, -- ^ Output directory for golden test results
+    filename      :: String, -- ^ filename of golden test result
+    output        :: str, -- ^ Output content
     encodePretty  :: str -> String, -- ^ Makes the comparison pretty when the test fails
     writeToFile   :: FilePath -> str -> IO (), -- ^ How to write into the golden file the file
     readFromFile  :: FilePath -> IO str, -- ^ How to read the file,
-    goldenFile    :: FilePath, -- ^ Where to read/write the golden file for this test.
-    actualFile    :: Maybe FilePath, -- ^ Where to save the actual file for this test. If it is @Nothing@ then no file is written.
     failFirstTime :: Bool -- ^ Whether to record a failure the first time this test is run
   }
 
