@@ -55,6 +55,7 @@ executables:
     - directory >= 1.2.5.0
     - optparse-applicative >= 0.18.1 && < 0.19
     - ansi-terminal >= 1.0 && < 2.0
+    - filepath
 
 tests:
   hspec-golden-test:
