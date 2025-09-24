@@ -26,7 +26,7 @@ jobs:
         with:
           cabal-file: hspec-golden.cabal
           ubuntu-version: "latest"
-          macos-version: "13"
+          macos-version: "14"
           version: 0.1.7.0
 
   build-and-test:
