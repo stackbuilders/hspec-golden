@@ -25,7 +25,7 @@ jobs:
         uses: kleidukos/get-tested@v0.1.7.0
         with:
           cabal-file: hspec-golden.cabal
-          # ubuntu-version: "latest"
+          ubuntu-version: "latest"
           macos-version: "13"
           version: 0.1.7.0
 
