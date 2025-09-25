@@ -1,3 +1,4 @@
+{-# language NamedFieldPuns #-}
 module JsonGoldenSpec where
 
 import           Test.Hspec
@@ -7,14 +8,14 @@ import qualified Data.ByteString.Lazy as B
 
 
 goldenBytestring :: String -> B.ByteString -> Golden B.ByteString
-goldenBytestring name actualOutput =
+goldenBytestring name output =
     Golden {
-        output = actualOutput,
+        name,
+        output,
+        outputDir = ".otherGolden/",
         encodePretty = show,
         writeToFile = B.writeFile,
         readFromFile = B.readFile,
-        goldenFile = ".otherGolden/" <> name,
-        actualFile = Just (".otherGolden/" <> name <> "-actual"),
         failFirstTime = False
     }
 
