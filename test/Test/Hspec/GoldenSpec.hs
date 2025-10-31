@@ -9,18 +9,28 @@ import           Test.Hspec.Golden
 
 import           System.Directory
 import           System.IO.Silently
+import           System.FilePath ((</>))
 
 {-# ANN module "HLint: ignore Reduce duplication" #-}
 
-fixtureContent, fixtureTestName, fixtureUpdatedContent :: String
+
+fixtureUpdatedContent :: String
 fixtureUpdatedContent = "different text"
+
+fixtureContent :: String
 fixtureContent = "simple text"
+
+fixtureTestName :: String
 fixtureTestName = "id"
 
-goldenTestDir, goldenFilePath, actualFilePath :: FilePath
-goldenTestDir = ".golden" ++ "/" ++ "id"
-goldenFilePath = goldenTestDir ++ "/" ++ "golden"
-actualFilePath = goldenTestDir ++ "/" ++ "actual"
+goldenTestDir :: FilePath 
+goldenTestDir = ".golden" 
+
+goldenFilePath :: FilePath
+goldenFilePath = goldenTestDir </> "id-golden"
+
+actualFilePath :: FilePath
+actualFilePath = goldenTestDir </> "id-actual"
 
 fixtureTest :: String -> H.Spec
 fixtureTest content =
@@ -66,7 +76,7 @@ spec =
            void $ runSpec $ fixtureTest fixtureUpdatedContent
            actualFileContent <- readFile actualFilePath
            actualFileContent `shouldBe` fixtureUpdatedContent
-
+    
         it "shouldn't override the `golden` file" $ do
            void $ runSpec $ fixtureTest fixtureContent
            void $ runSpec $ fixtureTest fixtureUpdatedContent
@@ -78,7 +88,7 @@ spec =
         void $ runSpec $ fixtureTest fixtureContent
         result <- readFile goldenFilePath
         pure $ defaultGolden "io-test" result
-
+   
     context "when the output is not updated" $
       context "when the test is executed a second time" $
         it "shouldn't change the `golden` file content" $ do
@@ -86,10 +96,10 @@ spec =
            void $ runSpec $ fixtureTest fixtureContent
            goldenFileContent <- readFile goldenFilePath
            goldenFileContent `shouldBe` fixtureContent
-
+    
     describe "golden" $
       context "given some input" $
         it "creates file with separated dashes" $ do
           void $ runSpec $ fixtureGoldenTest fixtureContent
-          goldenFile <- readFile ".golden/id-golden-sample-file/golden"
+          goldenFile <- readFile ".golden/id-golden-sample-file-golden"
           goldenFile `shouldBe` fixtureContent
