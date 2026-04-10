@@ -47,9 +47,9 @@ jobs:
 
       - name: Install LLVM (macOS)
         if: runner.os == 'macOS'
-        run: |
-          brew install llvm@12
-          echo "$(brew --prefix llvm@12)/bin" >> $GITHUB_PATH
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: "12"
 
       - name: Update cabal
         run: cabal update
