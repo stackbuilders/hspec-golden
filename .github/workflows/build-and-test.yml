@@ -45,6 +45,12 @@ jobs:
           ghc-version: ${{ matrix.ghc }}
           cabal-version: "3.8"
 
+      - name: Install LLVM (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install llvm@12
+          echo "$(brew --prefix llvm@12)/bin" >> $GITHUB_PATH
+
       - name: Update cabal
         run: cabal update
 
