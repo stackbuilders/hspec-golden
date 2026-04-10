@@ -26,7 +26,7 @@ jobs:
         with:
           cabal-file: hspec-golden.cabal
           ubuntu-version: "latest"
-          macos-version: "13"
+          macos-version: "latest"
           version: 0.1.7.0
 
   build-and-test:
@@ -44,6 +44,12 @@ jobs:
         with:
           ghc-version: ${{ matrix.ghc }}
           cabal-version: "3.8"
+
+      - name: Install LLVM (macOS)
+        if: runner.os == 'macOS'
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: "14"
 
       - name: Update cabal
         run: cabal update
